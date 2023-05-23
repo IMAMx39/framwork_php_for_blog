@@ -1,0 +1,20 @@
+{
+    "name": "imaas/my-blog",
+    "type": "project",
+    "description": "Projet de blog en PHP pour la formation PHP/Symfony d'OpenClassrooms",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "Core\\": "core/"
+        }
+    },
+    "authors": [
+        {
+            "name": "imam"
+        }
+    ],
+    "require": {
+        "twig/twig": "3.5"
+    }
+}
