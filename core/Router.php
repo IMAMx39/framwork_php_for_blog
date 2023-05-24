@@ -3,16 +3,6 @@
 namespace Core;
 
 
-use Imaas\MyBlog\controller\AdminController;
-use Imaas\MyBlog\controller\CommentController;
-use Imaas\MyBlog\controller\ContactController;
-use Imaas\MyBlog\controller\HomeController;
-use Imaas\MyBlog\controller\LoginController;
-use Imaas\MyBlog\controller\LogoutController;
-use Imaas\MyBlog\controller\PostController;
-use Imaas\MyBlog\controller\PostsListController;
-use Imaas\MyBlog\controller\SignupController;
-
 class Router
 {
     public Request $request;
@@ -38,32 +28,35 @@ class Router
         $this->response = $response;
     }
 
-    public function get(string $path, $param)
+    public function get(string $path, $callback)
     {
-        $this->routes['get'][$path] = $param;
+        $this->routes['get'][$path] = $callback;
     }
 
-    public function post(string $path, $param)
+    public function post(string $path, $callback)
     {
-        $this->routes['post'][$path] = $param;
+        $this->routes['post'][$path] = $callback;
     }
 
     public function resolve()
     {
         $path = $this->request->getPath();
         $method = $this->request->getMethod();
+        $callback = $this->routes[$method][$path] ?? false;
 
-        $param = $this->routes[$method][$path] ?? false;
-
-        if ($param === false) {
+        if ($callback === false) {
             $this->response->statusCode('404');
             return $this->renderView("_404");
         }
-        if (is_string($param)) {
-            return $this->renderView($param);
+        if (is_string($callback)) {
+            return $this->renderView($callback);
         }
 
-        return call_user_func($param);
+        if (is_array($callback)){
+            $callback[0]  = new $callback[0];
+        }
+
+        return call_user_func($callback);
     }
 
     public function renderView($view)
@@ -84,14 +77,14 @@ class Router
     protected function layoutContent()
     {
         ob_start();
-        include_once Application::$ROOT_DIR."../src/templates/layouts/main.html.twig";
+        include_once Application::$ROOT_DIR."/src/templates/layouts/main.html.twig";
         return ob_get_clean();
     }
 
     protected function renderViewOnly($view)
     {
         ob_start();
-        include_once Application::$ROOT_DIR."../src/templates/$view.html.twig";
+        include_once Application::$ROOT_DIR."/src/templates/$view.html.twig";
         return ob_get_clean();
     }
 
