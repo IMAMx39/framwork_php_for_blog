@@ -7,19 +7,8 @@ class Router
 {
     public Request $request;
     public Response $response;
-    private array $routes = [
-        '/' => HomeController::class,
-        '/postsList' => PostsListController::class,
-        '/post/([0-9]+)' => PostController::class,
-        '/comment/([a-z]+)' => CommentController::class,
-        '/login' => LoginController::class,
-        '/logout' => LogoutController::class,
-        '/signup' => SignupController::class,
-        '/signup/([a-f0-9]{64})' => SignupController::class,
-        '/admin' => AdminController::class,
-        '/admin/([a-z]+)' => AdminController::class,
-        '/contact' => ContactController::class
-    ];
+    private array $routes = [];
+
 
 
     public function __construct(Request $request, Response $response)
@@ -41,7 +30,7 @@ class Router
     public function resolve()
     {
         $path = $this->request->getPath();
-        $method = $this->request->getMethod();
+        $method = $this->request->method();
         $callback = $this->routes[$method][$path] ?? false;
 
         if ($callback === false) {
@@ -53,22 +42,23 @@ class Router
         }
 
         if (is_array($callback)){
-            $callback[0]  = new $callback[0];
+            Application::$app->controller = new $callback[0]();
+            $callback[0] = Application::$app->controller;
         }
 
-        return call_user_func($callback);
+        return call_user_func($callback , $this->request);
     }
 
-    public function renderView($view)
+    public function renderView($view, $params =[]): array|bool|string
     {
         $layout = $this->layoutContent();
-        $view = $this->renderViewOnly($view);
+        $view = $this->renderViewOnly($view ,$params);
         return str_replace('{{ content }}' , $view, $layout);
 
     }
 
-   public function renderContent($view)
-    {
+   public function renderContent($view): array|bool|string
+   {
         $layout = $this->layoutContent();
         return str_replace('{{ content }}' , $view, $layout);
 
@@ -76,15 +66,20 @@ class Router
 
     protected function layoutContent()
     {
+        $layout = Application::$app->controller->layout;
         ob_start();
-        include_once Application::$ROOT_DIR."/src/templates/layouts/main.html.twig";
+        include_once Application::$ROOT_DIR."/src/templates/layouts/$layout.html.twig";
         return ob_get_clean();
     }
 
-    protected function renderViewOnly($view)
+    protected function renderViewOnly($view ,$params)
     {
+        foreach ($params as $key => $value){
+            $$key = $value;
+        }
         ob_start();
         include_once Application::$ROOT_DIR."/src/templates/$view.html.twig";
+//        include_once Application::$ROOT_DIR."/src/templates/$view.php";
         return ob_get_clean();
     }
 
