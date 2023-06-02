@@ -4,51 +4,44 @@ namespace Core;
 
 class Request
 {
-
-    public function getPath()
+    public function getPath(): string
     {
-        $path = $_SERVER['REQUEST_URI'] ?? '/';
-        $position = strpos($path, '?');
-
-        if ($position === false){
-            return $path;
-        }
-
-        return  substr($path, 0, $position);
-    }
-
-    public function method()
-    {
-
-        return strtolower( $_SERVER['REQUEST_METHOD']);
-
+        return $_SERVER['REQUEST_URI'] ?? '/';
     }
 
     public function isGET(): bool
     {
-        return $this->method() === 'post';
+        return $this->method() === 'GET';
     }
+
+    public function method(): string
+    {
+
+        return strtolower($_SERVER['REQUEST_METHOD']);
+
+    }
+
     public function isPOST(): bool
     {
-        return $this->method() === 'post';
+        return $this->method() === 'POST';
     }
 
-
-
-    public function getBody()
+    public function query(): array
     {
-        $body =[];
-        if ($this->method() ==='get'){
-            foreach ($_GET as $key => $value){
-                $body[$key] = filter_input(INPUT_GET , $key, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            }
+        $data = [];
+        foreach ($_GET as $key => $value) {
+            $data[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         }
-        if ($this->method() ==='post'){
-            foreach ($_POST as $key => $value){
-                $body[$key] = filter_input(INPUT_POST , $key, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            }
-        }
-        return $body;
+
+        return $data;
     }
 
+    public function request(): array
+    {
+        $data = [];
+        foreach ($_POST as $key => $value) {
+            $data[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        }
+        return $data;
+    }
 }

@@ -2,44 +2,42 @@
 
 namespace Core;
 
+use LogicException;
 
 class Application
 {
-    public Response $response;
-    public Router $router;
-    public Request $request;
     public static Application $app;
+    private Router $router;
     public static string $ROOT_DIR;
-    public Controller $controller;
 
-    /**
-     * @return Controller
-     */
-    public function getController(): Controller
-    {
-        return $this->controller;
-    }
 
-    /**
-     * @param Controller $controller
-     */
-    public function setController(Controller $controller): void
+    public function __construct()
     {
-        $this->controller = $controller;
-    }
 
-    public function __construct($rootPath)
-    {
-        self::$ROOT_DIR = $rootPath;
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
         self::$app = $this;
-        $this->request = new Request();
-        $this->response = new Response();
-        $this->router = new Router($this->request, $this->response);
+        $this->router = new Router();
     }
 
-    public function run(): void
+    public function request(Request $request): Response
     {
-       echo $this->router->resolve();
+        $callable = $this->router->resolve($request);
+        if (!is_callable($callable)) {
+            return new Response('', 404);
+        }
+
+
+        $response = call_user_func_array($callable, [$request]);
+        if (!$response instanceof Response) {
+            throw new LogicException('Controller response must be an instance of ' . Response::class . ' ' . gettype($response) . ' given');
+        }
+
+        return $response;
     }
 
+    public function getRouter(): Router
+    {
+        return $this->router;
+    }
 }

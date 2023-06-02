@@ -4,10 +4,30 @@ namespace Core;
 
 class Response
 {
+    private string|array $content;
+    private int $status;
 
-    public function statusCode(int $status): void
+
+    public function __construct(string|array $content = '', int $status = 200)
     {
-        http_response_code($status);
+        $this->content = $content;
+        $this->status = $status;
+    }
+
+    /**
+     * @return string|array
+     */
+    public function getContent(): string | array
+    {
+        return $this->content;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStatus(): int
+    {
+        return $this->status;
     }
 
 }
