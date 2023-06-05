@@ -34,6 +34,10 @@ $app->getRouter()->get('/login', static function (Request $request) {
 $app->getRouter()->get('/register', static function (Request $request) {
     return (new AuthController())->register($request);
 });
+
+$app->getRouter()->post('/register', static function (Request $request) {
+    return (new AuthController())->register($request);
+});
 //$app->getRouter()->post('/contact', [SiteController::class, 'handleContact']);
 //
 //$app->getRouter()->post('/login', [AuthController::class, 'login']);
