@@ -8,6 +8,7 @@ class FormBuilder
 {
     private array $fields;
 
+
     public function __construct()
     {
         $this->fields = [];
@@ -23,4 +24,5 @@ class FormBuilder
     {
         return  sprintf('<form>%s</form>',implode('', $this->fields));
     }
+
 }

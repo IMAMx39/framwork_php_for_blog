@@ -7,6 +7,7 @@ use Core\Form\EmailField;
 use Core\Form\FormBuilder;
 use Core\Form\InputField;
 use Core\Form\PasswordField;
+use Core\Form\Submit;
 use Core\Form\TextareaField;
 use Core\Request;
 use Core\Response;
@@ -24,9 +25,11 @@ class AuthController extends Controller
 
         $formBuilder = new FormBuilder();
 
-        $formBuilder->add(new InputField('username','Username', ['class' => 'form-control'], ['required']));
+        $formBuilder->add(new InputField('username','Prénom', ['class' => 'form-control'], ['required']));
+        $formBuilder->add(new InputField('username','Nom', ['class' => 'form-control'], ['required']));
         $formBuilder->add(new EmailField('email', 'Email',['class' => 'form-control'], ['required']));
-        $formBuilder->add(new PasswordField('password','Password',['class' => 'form-control'], ['required']));
+        $formBuilder->add(new PasswordField('password','Mot de passe',['class' => 'form-control'], ['required']));
+        $formBuilder->add(new PasswordField('password','Retaper votre mot de passe ',['class' => 'form-control'], ['required']));
 
 //        $form = (new FormBuilder('', ['class' => 'form']))
 //            ->add(
