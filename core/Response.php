@@ -4,20 +4,20 @@ namespace Core;
 
 class Response
 {
-    private string|array $content;
+    private string $content;
     private int $status;
 
 
-    public function __construct(string|array $content = '', int $status = 200)
+    public function __construct(string $content = '', int $status = 200)
     {
         $this->content = $content;
         $this->status = $status;
     }
 
     /**
-     * @return string|array
+     * @return string
      */
-    public function getContent(): string | array
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -29,5 +29,4 @@ class Response
     {
         return $this->status;
     }
-
 }

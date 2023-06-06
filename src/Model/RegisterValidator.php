@@ -2,9 +2,9 @@
 
 namespace App\Model;
 
-use Core\Model;
+use Core\Validation\Validator;
 
-class RegisterModel extends Model
+class RegisterValidator extends Validator
 {
     public string $firstname;
     public string $lastname;
@@ -32,4 +32,5 @@ class RegisterModel extends Model
             'passwordConfirm' => [self::RULE_REQUIRED,[self::RULE_MATCH, 'match' =>'password']],
         ];
     }
+
 }

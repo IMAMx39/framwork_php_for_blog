@@ -2,37 +2,15 @@
 
 namespace Core;
 
-class Render
+final class Render
 {
-    public function renderView($view, $params =[])
+    public static function render(string $view, array $data): string
     {
-        $layout = $this->layoutContent();
-        $view = $this->renderViewOnly($view ,$params);
-        return str_replace('{{ content }}' , $view, $layout);
-
-    }
-
-    public function renderContent($view): array|bool|string
-    {
-        $layout = $this->layoutContent();
-        return str_replace('{{ content }}' , $view, $layout);
-
-    }
-
-    protected function layoutContent()
-    {
-        ob_start();
-        include_once Application::$ROOT_DIR."/src/templates/layouts/main.html.twig";
-        return ob_get_clean();
-    }
-
-    protected function renderViewOnly($view ,$params)
-    {
-        foreach ($params as $key => $value){
+        foreach ($data as $key => $value) {
             $$key = $value;
         }
         ob_start();
-        include_once Application::$ROOT_DIR."/src/templates/$view.html.twig";
+        include_once(dirname(__DIR__) . "/templates/$view.php");
         return ob_get_clean();
     }
 }

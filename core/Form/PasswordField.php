@@ -2,12 +2,13 @@
 
 namespace Core\Form;
 
-class TextareaField extends Field
+class PasswordField extends Field
 {
 
     public function __toString(): string
     {
-        $field = '<input type="text" name="' . $this->name . '"';
+        $field = '<label for="' . $this->name . '">' . $this->label . '</label>' .
+            '<input type="password" id="' . $this->name . '" name="' . $this->name . '"';
 
         foreach ($this->attributes as $attribute => $value) {
             $field .= ' ' . $attribute . '="' . $value . '"';
@@ -17,4 +18,5 @@ class TextareaField extends Field
 
         return $field;
     }
+
 }

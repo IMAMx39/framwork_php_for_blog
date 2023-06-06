@@ -6,17 +6,15 @@ use LogicException;
 
 class Application
 {
-    public static Application $app;
-    private Router $router;
-    public static string $ROOT_DIR;
 
+    public static string $ROOT_DIR;
+    private Router $router;
 
     public function __construct()
     {
-
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
-        self::$app = $this;
+
         $this->router = new Router();
     }
 
@@ -26,7 +24,6 @@ class Application
         if (!is_callable($callable)) {
             return new Response('', 404);
         }
-
 
         $response = call_user_func_array($callable, [$request]);
         if (!$response instanceof Response) {
