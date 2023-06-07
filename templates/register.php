@@ -30,5 +30,5 @@
 <!--        <label>Email</label>-->
 <!--        <input name="email" type="text" class="form-control">-->
 <!--    </div>-->
-<!--    <button type="submit" class="btn btn-primary">Valider</button>-->
+    <button type="submit" class="btn btn-primary mt-4">Valider</button>
 <!--</form>-->

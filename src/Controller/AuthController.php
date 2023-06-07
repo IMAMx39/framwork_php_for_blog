@@ -3,12 +3,10 @@
 namespace App\Controller;
 
 use Core\Controller;
-use Core\Form\EmailField;
+use Core\Form\Field\Email;
+use Core\Form\Field\Input;
+use Core\Form\Field\Password;
 use Core\Form\FormBuilder;
-use Core\Form\InputField;
-use Core\Form\PasswordField;
-use Core\Form\Submit;
-use Core\Form\TextareaField;
 use Core\Request;
 use Core\Response;
 
@@ -23,14 +21,23 @@ class AuthController extends Controller
     {
 
 
-        $formBuilder = new FormBuilder();
+        $formBuilder = new FormBuilder('GET');
 
-        $formBuilder->add(new InputField('username','Prénom', ['class' => 'form-control'], ['required']));
-        $formBuilder->add(new InputField('username','Nom', ['class' => 'form-control'], ['required']));
-        $formBuilder->add(new EmailField('email', 'Email',['class' => 'form-control'], ['required']));
-        $formBuilder->add(new PasswordField('password','Mot de passe',['class' => 'form-control'], ['required']));
-        $formBuilder->add(new PasswordField('password','Retaper votre mot de passe ',['class' => 'form-control'], ['required']));
-
+        $formBuilder
+            ->add(
+                (new Input('username', ['class' => 'form-control']))
+                ->label('Utilisateur')
+            )->add(
+                (new Email('email',['class'=>'form-control']))
+                ->label('Email')
+            );
+//            ->add(
+//                (new Email('email', ['id' => 'toto', 'class' => 'form-control']))
+//                ->label('Email')
+//                ->render(function (Email $email) {
+//                    return sprintf('%s<input type="" name="%s">%s', $email->getLabel()->start(), $email->getName(), $email->getLabel()->end());
+//                })
+//            );
 //        $form = (new FormBuilder('', ['class' => 'form']))
 //            ->add(
 //                (new Text('firstname'))

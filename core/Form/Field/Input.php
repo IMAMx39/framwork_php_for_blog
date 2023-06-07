@@ -1,14 +1,16 @@
 <?php
 
-namespace Core\Form;
+namespace Core\Form\Field;
 
-class PasswordField extends Field
+use Core\Form\Field;
+
+class Input extends Field
 {
 
-    public function __toString(): string
+    protected function template(): string
     {
         $field = '<label for="' . $this->name . '">' . $this->label . '</label>' .
-            '<input type="password" id="' . $this->name . '" name="' . $this->name . '"';
+            '<input type="text" id="' . $this->name . '" name="' . $this->name . '"';
 
         foreach ($this->attributes as $attribute => $value) {
             $field .= ' ' . $attribute . '="' . $value . '"';
@@ -18,5 +20,4 @@ class PasswordField extends Field
 
         return $field;
     }
-
 }
