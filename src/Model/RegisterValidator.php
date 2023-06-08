@@ -4,7 +4,7 @@ namespace App\Model;
 
 use Core\Validation\Validator;
 
-class RegisterValidator extends Validator
+class RegisterValidator
 {
     public string $firstname;
     public string $lastname;
@@ -22,15 +22,6 @@ class RegisterValidator extends Validator
         echo 'Creation d un compte';
     }
 
-    public function rules(): array
-    {
-        return [
-            'firstname' => [self::RULE_REQUIRED],
-            'lastname' => [self::RULE_REQUIRED],
-            'email' => [self::RULE_REQUIRED ,self::RULE_EMAIL],
-            'password' => [self::RULE_REQUIRED,[self::RULE_MIN ,'min' => 8 ],[self::RULE_MAX, 'max' => 18]],
-            'passwordConfirm' => [self::RULE_REQUIRED,[self::RULE_MATCH, 'match' =>'password']],
-        ];
-    }
+
 
 }

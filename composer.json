@@ -16,6 +16,7 @@
     ],
     "require": {
         "twig/twig": "3.5",
-      "ext-apcu": "*"
+      "ext-apcu": "*",
+      "ext-pdo": "*"
     }
 }

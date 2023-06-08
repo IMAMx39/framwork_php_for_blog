@@ -31,12 +31,12 @@ $app->getRouter()->get('/login', static function (Request $request) {
     return (new AuthController())->login($request);
 });
 
-$app->getRouter()->get('/register', static function (Request $request) {
-    return (new AuthController())->register($request);
+$app->getRouter()->get('/register', static function (Request $request ) {
+    return (new AuthController())->handleRegister($request);
 });
 
 $app->getRouter()->post('/register', static function (Request $request) {
-    return (new AuthController())->register($request);
+    return (new AuthController())->handleRegister($request);
 });
 //$app->getRouter()->post('/contact', [SiteController::class, 'handleContact']);
 //

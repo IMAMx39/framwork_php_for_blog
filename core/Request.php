@@ -17,7 +17,7 @@ class Request
     public function method(): string
     {
 
-        return strtolower($_SERVER['REQUEST_METHOD']);
+        return $_SERVER['REQUEST_METHOD'];
 
     }
 
@@ -28,20 +28,22 @@ class Request
 
     public function query(): array
     {
-        $data = [];
-        foreach ($_GET as $key => $value) {
-            $data[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        }
+//        $data = [];
+//        foreach ($_GET as $key => $value) {
+//            $data[$key] = filter_input(INPUT_GET, $value, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+//        }
 
-        return $data;
+        return $_GET;
     }
 
     public function request(): array
     {
-        $data = [];
-        foreach ($_POST as $key => $value) {
-            $data[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        }
-        return $data;
+//        $data = [];
+//        if ($this->isPOST()){
+//            foreach ($_POST as $key => $value) {
+//                $data[$key] = $value;
+//            }
+//        }
+        return $_POST;
     }
 }

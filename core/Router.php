@@ -23,10 +23,7 @@ class Router
         $path = $request->getPath();
         $method = $request->method();
 
-        return $this->routes[$method][$path] ?? null;
+        return $this->routes[strtolower($method)][$path] ?? null;
 
     }
-
-
-
 }

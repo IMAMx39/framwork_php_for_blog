@@ -2,43 +2,46 @@
 
 namespace App\Controller;
 
+use App\Model\RegisterValidator;
+use App\repository\UserRepository;
 use Core\Controller;
 use Core\Form\Field\Email;
 use Core\Form\Field\Input;
-use Core\Form\Field\Password;
 use Core\Form\FormBuilder;
 use Core\Request;
 use Core\Response;
 
 class AuthController extends Controller
 {
+    private UserRepository $userRepository;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->userRepository = new UserRepository();
+    }
+
+
     public function login(): Response
     {
         return $this->render('login', []);
     }
 
-    public function register(Request $request): Response
+    public function handleRegister(Request $request): Response
     {
 
-
-        $formBuilder = new FormBuilder('GET');
+        $model = new RegisterValidator();
+        $formBuilder = new FormBuilder('POST', '/register');
 
         $formBuilder
             ->add(
-                (new Input('username', ['class' => 'form-control']))
-                ->label('Utilisateur')
+                (new Input('username', ['id' => 'username', 'class' => 'form-control']))
+                    ->withLabel('Utilisateur')
             )->add(
-                (new Email('email',['class'=>'form-control']))
-                ->label('Email')
+                (new Email('email', ['id' => 'email', 'class' => 'form-control']))
+                    ->withLabel('Email')
             );
-//            ->add(
-//                (new Email('email', ['id' => 'toto', 'class' => 'form-control']))
-//                ->label('Email')
-//                ->render(function (Email $email) {
-//                    return sprintf('%s<input type="" name="%s">%s', $email->getLabel()->start(), $email->getName(), $email->getLabel()->end());
-//                })
-//            );
-//        $form = (new FormBuilder('', ['class' => 'form']))
 //            ->add(
 //                (new Text('firstname'))
 //                    ->attr(['class' => 'toto'])
@@ -46,20 +49,26 @@ class AuthController extends Controller
 //                        new NotNull(),
 //                        (new StringLength())->min(3),
 //                    ])
-//            )
-//            ->add(new Text('lastname'))
-//            ->add(new Email('email'))
-//            ->add(new Textaera('description'));
-
-//        if ($form->handleRequest($request)->isSubbmited() && $form->isValid()) {
+//            );
 //
-//            //save in db
-//            // redirection
-//        }
+
+
+        if ($formBuilder->handleRequest($request)->isSubmitted() && $formBuilder->isValid()) {
+
+            var_dump($request->request());
+        }
 
         return $this->render('register', [
             'form' => $formBuilder
         ]);
 
+    }
+
+    public function register(): Response
+    {
+        $data = [
+            'users' , $this->userRepository->getAllUser()
+        ];
+        return $this->render('register', $data);
     }
 }

@@ -6,8 +6,6 @@ use LogicException;
 
 class Application
 {
-
-    public static string $ROOT_DIR;
     private Router $router;
 
     public function __construct()

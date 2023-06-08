@@ -9,15 +9,14 @@ class Input extends Field
 
     protected function template(): string
     {
-        $field = '<label for="' . $this->name . '">' . $this->label . '</label>' .
-            '<input type="text" id="' . $this->name . '" name="' . $this->name . '"';
-
-        foreach ($this->attributes as $attribute => $value) {
-            $field .= ' ' . $attribute . '="' . $value . '"';
+        $attributes = [];
+        foreach ($this->attributes as $key => $value) {
+            $attributes[] = "{$key}={$value}";
         }
-
-        $field .= '>';
-
-        return $field;
+        return sprintf(
+            '%s<input type="text" name="%s" %s>',
+            $this->label,
+            $this->name,
+            implode(' ', $attributes));
     }
 }

@@ -20,7 +20,7 @@ abstract class Field implements Stringable
         $this->constraints = $constraints;
     }
 
-    public function label(string $name, array $attributes = []): self
+    public function withLabel(string $name, array $attributes = []): self
     {
 
         if (isset($this->attributes['id'])) {
@@ -71,5 +71,6 @@ abstract class Field implements Stringable
     }
 
     abstract protected function template(): string;
+//    abstract public function submit(Request $request): void;
 
 }
