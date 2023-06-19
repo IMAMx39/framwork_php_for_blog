@@ -2,6 +2,9 @@
 
 namespace Core;
 
+use Exception;
+use RuntimeException;
+
 class Request
 {
     public function getPath(): string
@@ -28,22 +31,28 @@ class Request
 
     public function query(): array
     {
-//        $data = [];
-//        foreach ($_GET as $key => $value) {
-//            $data[$key] = filter_input(INPUT_GET, $value, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-//        }
-
         return $_GET;
     }
 
     public function request(): array
     {
-//        $data = [];
-//        if ($this->isPOST()){
-//            foreach ($_POST as $key => $value) {
-//                $data[$key] = $value;
-//            }
-//        }
         return $_POST;
     }
+
+    public static function getData($varname, $isNum = false) : string
+    {
+        $value = isset($_POST[$varname]) ? trim(htmlspecialchars($_POST[$varname])) : false;
+
+        if($value == false) {
+            throw new RuntimeException();
+        }
+
+        if($isNum && !is_numeric($_POST[$varname])) {
+            throw new RuntimeException();
+        }
+
+        return $value;
+    }
+
+
 }

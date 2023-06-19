@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
-use App\Model\RegisterValidator;
 use App\repository\UserRepository;
 use Core\Controller;
 use Core\Form\Field\Email;
 use Core\Form\Field\Input;
+use Core\Form\Field\Password;
 use Core\Form\FormBuilder;
 use Core\Request;
 use Core\Response;
@@ -15,8 +15,6 @@ class AuthController extends Controller
 {
     private UserRepository $userRepository;
 
-    /**
-     */
     public function __construct()
     {
         $this->userRepository = new UserRepository();
@@ -31,16 +29,21 @@ class AuthController extends Controller
     public function handleRegister(Request $request): Response
     {
 
-        $model = new RegisterValidator();
         $formBuilder = new FormBuilder('POST', '/register');
 
         $formBuilder
             ->add(
-                (new Input('username', ['id' => 'username', 'class' => 'form-control']))
-                    ->withLabel('Utilisateur')
+                (new Input('firstname', ['id' => 'firstname', 'class' => 'form-control']))
+                    ->withLabel('Prenom')
+            )->add(
+                (new Input('lastname', ['id' => 'lastname', 'class' => 'form-control']))
+                    ->withLabel('Nom')
             )->add(
                 (new Email('email', ['id' => 'email', 'class' => 'form-control']))
                     ->withLabel('Email')
+            )->add(
+                (new Password('password', ['id' => 'password', 'class' => 'md-4 form-control']))
+                    ->withLabel('Mot de passe')
             );
 //            ->add(
 //                (new Text('firstname'))
@@ -55,7 +58,14 @@ class AuthController extends Controller
 
         if ($formBuilder->handleRequest($request)->isSubmitted() && $formBuilder->isValid()) {
 
-            var_dump($request->request());
+            $firstname = Request::getData('firstname');
+            $lastname = Request::getData('lastname');
+            $email = Request::getData('email');
+            $password = Request::getData('password');
+
+            $this->userRepository->registerUser($firstname, $lastname, $email, $password);
+
+            return header('location: /');
         }
 
         return $this->render('register', [
@@ -64,11 +74,11 @@ class AuthController extends Controller
 
     }
 
-    public function register(): Response
+    public function users(): Response
     {
-        $data = [
-            'users' , $this->userRepository->getAllUser()
+        $users = [
+            'users', $this->userRepository->getAllUsers()
         ];
-        return $this->render('register', $data);
+        return $this->render('users', $users);
     }
 }
