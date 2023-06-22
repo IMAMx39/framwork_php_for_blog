@@ -36,7 +36,6 @@ class FormBuilder
 
     public function isValid(): bool
     {
-
         return true;
     }
 

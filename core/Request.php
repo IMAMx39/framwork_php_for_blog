@@ -43,11 +43,7 @@ class Request
     {
         $value = isset($_POST[$varname]) ? trim(htmlspecialchars($_POST[$varname])) : false;
 
-        if($value == false) {
-            throw new RuntimeException();
-        }
-
-        if($isNum && !is_numeric($_POST[$varname])) {
+        if(!$value) {
             throw new RuntimeException();
         }
 

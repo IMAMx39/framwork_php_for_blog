@@ -29,12 +29,12 @@ class AuthController extends Controller
     public function handleRegister(Request $request): Response
     {
 
-        $formBuilder = new FormBuilder('POST', '/register');
+        $formBuilder = new FormBuilder();
 
         $formBuilder
             ->add(
                 (new Input('firstname', ['id' => 'firstname', 'class' => 'form-control']))
-                    ->withLabel('Prenom')
+                    ->withLabel('Prénom')
             )->add(
                 (new Input('lastname', ['id' => 'lastname', 'class' => 'form-control']))
                     ->withLabel('Nom')
