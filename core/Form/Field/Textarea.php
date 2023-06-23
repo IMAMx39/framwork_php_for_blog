@@ -22,13 +22,14 @@ class Textarea extends Field
 
     protected function template(): string
     {
-        $field = '<input type="text" name="' . $this->name . '"';
-
-        foreach ($this->attributes as $attribute => $value) {
-            $field .= ' ' . $attribute . '="' . $value . '"';
+        $attributes = [];
+        foreach ($this->attributes as $key => $value) {
+            $attributes[] = "{$key}={$value}";
         }
-
-        $field .= '>';
-
-        return $field;    }
+        return sprintf(
+            '%s<textarea type="text" name="%s" %s></textarea>',
+            $this->label,
+            $this->name,
+            implode(' ', $attributes));
+    }
 }

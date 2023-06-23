@@ -1,17 +1,20 @@
-<h1>Contact us</h1>
-<form method="post">
-    <div class="form-group">
-        <label>Sujet</label>
-        <input type="text" name="subject" class="form-control">
-    </div>
-    <div class="form-group">
-        <label>Email</label>
-        <input name="email" type="text" class="form-control">
-    </div>
-    <div class="form-group">
-        <label>Text</label>
-        <textarea type="password" name="body" class="form-control"></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
 
+<?php
+
+/**
+ * @var FormBuilder $form
+ */
+
+use Core\Form\FormBuilder;
+
+?>
+
+<h1>Contact us</h1>
+
+<?php echo $form->start(); ?>
+<?php echo $form->row('username'); ?>
+<?php echo $form->row('email'); ?>
+<?php echo $form->row('subject'); ?>
+
+<button type="submit"  value="submit" class="btn btn-primary mt-4 me-lg-4">Valider</button>
+<?php echo $form->end(); ?>

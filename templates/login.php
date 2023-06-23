@@ -1,14 +1,19 @@
+
+<?php
+
+/**
+ * @var FormBuilder $form
+ */
+
+use Core\Form\FormBuilder;
+
+?>
+
 <h1>Login</h1>
-<form method="post">
 
-    <div class="form-group">
-        <label>Email</label>
-        <input type="email" name="email" class="form-control">
-    </div>
-    <div class="form-group">
-        <label>Mot de passe</label>
-        <input name="password" type="password" class="form-control">
-    </div>
+<?php echo $form->start(); ?>
+<?php echo $form->row('email'); ?>
+<?php echo $form->row('password'); ?>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+<button type="submit"  value="submit" class="btn btn-primary mt-4 me-lg-4">Valider</button>
+<?php echo $form->end(); ?>
