@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
-use App\repository\UserRepository;
+use App\Model\User;
+use App\Repository\UserRepository;
+use App\Service\UserService;
 use Core\Controller;
 use Core\Form\Field\Email;
 use Core\Form\Field\Input;
@@ -18,12 +20,6 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->userRepository = new UserRepository();
-    }
-
-
-    public function login(): Response
-    {
-        return $this->render('login', []);
     }
 
     public function handleRegister(Request $request): Response
@@ -48,28 +44,27 @@ class AuthController extends Controller
                 (new Password('password', ['id' => 'password', 'class' => 'md-4 form-control']))
                     ->withLabel('Mot de passe')
             );
-//            ->add(
-//                (new Text('firstname'))
-//                    ->attr(['class' => 'toto'])
-//                    ->constraints([
-//                        new NotNull(),
-//                        (new StringLength())->min(3),
-//                    ])
-//            );
-//
-
 
         if ($formBuilder->handleRequest($request)->isSubmitted() && $formBuilder->isValid()) {
 
-            $pseudo = Request::getData('pseudo');
-            $firstname = Request::getData('firstname');
-            $lastname = Request::getData('lastname');
-            $email = Request::getData('email');
-            $password = Request::getData('password');
+            $pseudo = $request->post('pseudo');
+            $firstname = $request->post('firstname');
+            $lastname = $request->post('lastname');
+            $email = $request->post('email');
+            $password = $request->post('password');
+            $hashPsw = UserService::hashPassword($password);
+//            $data = $formBuilder->getData();
+            $user = (new User())
+                ->setEmail($email)
+                ->setPseudo($pseudo)
+                ->setFirstname($firstname)
+                ->setLastname($lastname)
+                ->setPassword($hashPsw);
 
-            $this->userRepository->registerUser($pseudo,$firstname, $lastname, $email, $password);
+            $this->userRepository->register($user, $hashPsw);
 
-            return header('location: /');
+            header('location: /');
+            exit();
         }
 
         return $this->render('register', [

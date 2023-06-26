@@ -8,6 +8,12 @@ class Router
     public Request $request;
     private array $routes = [];
 
+    public function any(string $path, callable $callback): void
+    {
+        $this->get($path, $callback);
+        $this->post($path, $callback);
+    }
+
     public function get(string $path, callable $callback): void
     {
         $this->routes['get'][$path] = $callback;

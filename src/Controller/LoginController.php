@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
-use App\repository\UserRepository;
+use App\Model\User;
+use App\Repository\UserRepository;
+use App\Service\UserService;
 use App\SessionBlog;
 use Core\Controller;
 use Core\Form\Field\Input;
@@ -18,10 +20,12 @@ use Twig\Error\SyntaxError;
 class LoginController extends Controller
 {
     private UserRepository $userRepository;
+    private UserService $userService;
 
     public function __construct()
     {
         $this->userRepository = new UserRepository();
+        $this->userService = new UserService();
     }
 
     /**
@@ -41,28 +45,27 @@ class LoginController extends Controller
                     ->withLabel('Mot de passe')
             );
 
+        $errors = [];
         if ($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
 
-            $email = Request::getData('email');
-            $password = Request::getData('password');
+            $email = $request->post('email');
+            $password = $request->post('password');
 
-            $this->loginUser($email, $password);
+//            $this->loginUser($email, $password);
+            $user = $this->userRepository->getUser($email);
+            if ($user instanceof User && UserService::verifyPassword($password, $user->getPassword())) {
+                $this->userService->login($user);
+                header('location: /home');
+                exit();
+            }
 
+            $errors = ['User not found or wrrong password'];
         }
 
         return $this->render('login', [
-            "form" => $form
+            "form" => $form,
+            "errors" => $errors
         ]);
-    }
-
-    private function loginUser(string $email, string $password): void
-    {
-        $this->userRepository->getUserLogin($email, $password);
-        dump((new SessionBlog())->get('pseudo'));
-
-         header('location: /');
-         exit();
-
     }
 
 }

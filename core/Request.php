@@ -39,16 +39,12 @@ class Request
         return $_POST;
     }
 
-    public static function getData($varname, $isNum = false) : string
+    public function post(string $key) : string
     {
-        $value = isset($_POST[$varname]) ? trim(htmlspecialchars($_POST[$varname])) : false;
-
-        if(!$value) {
-            throw new RuntimeException("Error 404");
+        if (!array_key_exists($key, $_POST) ) {
+            throw new \InvalidArgumentException($key. ' not exist');
         }
 
-        return $value;
+        return trim(htmlspecialchars($_POST[$key]));
     }
-
-
 }

@@ -21,9 +21,10 @@ class User
     /**
      * @param string $pseudo
      */
-    public function setPseudo(string $pseudo): void
+    public function setPseudo(string $pseudo): self
     {
         $this->pseudo = $pseudo;
+        return $this;
     }
 
 
@@ -39,9 +40,10 @@ class User
     /**
      * @param string $firstname
      */
-    public function setFirstname(string $firstname): void
+    public function setFirstname(string $firstname): self
     {
         $this->firstname = $firstname;
+        return $this;
     }
 
     /**
@@ -55,9 +57,10 @@ class User
     /**
      * @param string $lastname
      */
-    public function setLastname(string $lastname): void
+    public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
+        return $this;
     }
 
     /**
@@ -71,9 +74,10 @@ class User
     /**
      * @param string $email
      */
-    public function setEmail(string $email): void
+    public function setEmail(string $email): self
     {
         $this->email = $email;
+        return $this;
     }
 
     /**
@@ -87,9 +91,10 @@ class User
     /**
      * @param string $password
      */
-    public function setPassword(string $password): void
+    public function setPassword(string $password): self
     {
         $this->password = $password;
+        return $this;
     }
 
 }

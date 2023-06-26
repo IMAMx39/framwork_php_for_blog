@@ -11,7 +11,6 @@ use Core\Request;
 use Core\Session;
 
 require '../vendor/autoload.php';
-Session::start();
 
 $app = new Application();
 
@@ -19,50 +18,31 @@ $app->getRouter()->get('/', static function (Request $request) {
     return (new HomeController())->contact($request);
 });
 
-//$app->getRouter()->get('/', static function (Request $request) {
-//    return (new HomeController())->home($request);
-//});
 
-$app->getRouter()->get('/contact', static function (Request $request) {
+$app->getRouter()->any('/contact', static function (Request $request) {
     return (new ContactController())->contact($request);
 });
 
-$app->getRouter()->post('/contact', static function (Request $request) {
-    return (new ContactController())->contact($request);
-});
-
-$app->getRouter()->get('/home', static function (Request $request) {
+$app->getRouter()->any('/home', static function (Request $request) {
     return (new HomeController())->contact($request);
 });
 
-$app->getRouter()->post('/home', static function (Request $request) {
-    return (new HomeController())->contact($request);
-});
 
-//$app->getRouter()->get('/login', static function (Request $request) {
-//    return (new AuthController())->login($request);
-//});
-
-$app->getRouter()->get('/login', static function (Request $request) {
+$app->getRouter()->any('/login', static function (Request $request) {
     return (new LoginController())->login($request);
 });
-$app->getRouter()->post('/login', static function (Request $request) {
-    return (new LoginController())->login($request);
-});
+
 $app->getRouter()->get('/logout', static function (Request $request) {
     return (new LogoutController())->logout($request);
 });
 
-$app->getRouter()->get('/register', static function (Request $request ) {
+$app->getRouter()->any('/register', static function (Request $request ) {
     return (new AuthController())->handleRegister($request);
 });
 $app->getRouter()->get('/users', static function (Request $request) {
     return (new AuthController())->users($request);
 });
 
-$app->getRouter()->post('/register', static function (Request $request) {
-    return (new AuthController())->handleRegister($request);
-});
 
 define('ROOT',dirname(__DIR__));
 

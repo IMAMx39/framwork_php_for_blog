@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\UserService;
 use Core\Controller;
 use Core\Form\Field\Email;
 use Core\Form\Field\Input;
@@ -10,14 +11,29 @@ use Core\Form\FormBuilder;
 use Core\Form\Submit;
 use Core\Request;
 use Core\Response;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class HomeController extends Controller
 {
+    private UserService $userService;
+
+    public function __construct()
+    {
+        $this->userService = new UserService();
+    }
 
 
-
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     public function contact(Request $request): Response
     {
+        $user = $this->userService->getUserFromSession();
+
 
         $formContact = new FormBuilder();
 
@@ -35,20 +51,16 @@ class HomeController extends Controller
 
         if ($formContact->handleRequest($request)->isSubmitted() && $formContact->isValid()) {
 
-            $username = Request::getData('username');
-            $email = Request::getData('email');
-            $subject = Request::getData('subject');
+            $username = $request->post('username');
+            $email =  $request->post('email');
+            $subject =  $request->post('subject');
 
 
         }
 
         return $this->render('home', [
-            "form" => $formContact
+            "form" => $formContact,
         ]);
     }
 
-    public function home(Request $request): Response
-    {
-        return $this->render('home',[]);
-    }
 }

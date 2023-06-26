@@ -22,32 +22,34 @@
                 <li class="nav-item"><a class="nav-link active" href="/register">Register</a></li>
                 <li class="nav-item"><a class="nav-link active" href="/contact">Contact</a></li>
             </ul>
-            <?php use App\repository\UserRepository;
 
-            if (!UserRepository::userIsConnected()) { ?>
-                <ul class="navbar-nav  me-lg-4 ">
-                    <li class="nav-item"><a class="nav-link active" href="/login">Login</a></li>
-                </ul>
-            <?php };
-            ?>
-            <div class="">
-                <?php if (UserRepository::userIsConnected()) {
-                   echo ' <ul class="navbar-nav  me-lg-4 ">
-                    <li class="nav-item"><a class="nav-link active" href="/logout">Logout</a></li>
-                </ul>';
-                }; ?>
+            <div class="d-flex">
+                <a class="nav-link" href="/login">Login</a>
             </div>
-
         </div>
     </div>
 </nav>
-<div class="container" style="margin-bottom: 34rem">
+<div class="container" style="margin-bottom: 29.5em">
     {{ content }}
 </div>
 
-<footer class="navbar-expand-lg bg-primary">
-    <div class="d-flex align-items-center justify-content-evenly">
-    </div>
+<!-- Footer-->
+<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top" >
+    <p class="col-md-4 mb-0 text-muted"> Copyright &copy; IMAMOS95 2023 |
+        <a href="">Coucou.</a></p>
+
+    <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+    </a>
+
+    <ul class="nav col-md-4 justify-content-end">
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+    </ul>
+
 </footer>
 
 </body>
