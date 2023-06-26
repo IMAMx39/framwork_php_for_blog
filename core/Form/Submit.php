@@ -4,23 +4,18 @@ namespace Core\Form;
 
 class Submit extends Field
 {
-    protected string $button;
 
 
     protected function template(): string
     {
-        $button = null;
-        $buttonText = $button['text'];
-        $attributes = $button['attributes'];
-
-        $buttonHtml = '<button type="submit"';
-
-        foreach ($attributes as $attribute => $value) {
-            $buttonHtml .= ' ' . $attribute . '="' . $value . '"';
+        $attributes = [];
+        foreach ($this->attributes as $key => $value) {
+            $attributes[] = "{$key}={$value}";
         }
 
-        $buttonHtml .= '>' . $buttonText . '</button>';
-
-        return $buttonHtml;
+        return sprintf(
+            '<button type="submit" %s>%s</button>',
+            $this->label,
+            implode(' ', $attributes));
     }
 }

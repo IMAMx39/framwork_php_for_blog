@@ -3,21 +3,17 @@
 namespace App\Controller;
 
 use Core\Controller;
+use Core\Request;
 use Core\Response;
 use Core\Session;
 
 class LogoutController extends Controller
 {
-    public function __invoke() :void
-    {
-        Session::Destroy();
-        header('location: /');
-    }
 
-    public function logout(): void
+    public function logout(): Response
     {
         Session::Destroy();
-        header('location: /');
+         return   header('location: /');
     }
 
 

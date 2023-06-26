@@ -9,7 +9,7 @@ class ConfigDb
         'db_user'       => 'alpha',
         'db_password'   => '',
         'db_host'       => 'localhost',
-        'db_name'       => 'blog',
+        'db_name'       => 'p5phpblog',
 
     ];
 

@@ -8,6 +8,25 @@ class User
     private string $lastname;
     private string $email;
     private string $password;
+    private string $pseudo;
+
+    /**
+     * @return string
+     */
+    public function getPseudo(): string
+    {
+        return $this->pseudo;
+    }
+
+    /**
+     * @param string $pseudo
+     */
+    public function setPseudo(string $pseudo): void
+    {
+        $this->pseudo = $pseudo;
+    }
+
+
 
     /**
      * @return string

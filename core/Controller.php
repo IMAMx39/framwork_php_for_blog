@@ -2,8 +2,25 @@
 
 namespace Core;
 
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
+use Twig\Loader\FilesystemLoader;
+
 abstract class Controller
 {
+
+    /**
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws LoaderError
+     */
+//    public function render(string $template, array $data)
+//    {
+//        return Twig::getInstance()->render($template, $data);
+//
+//    }
 
     protected function render(string $view, array $data): Response
     {

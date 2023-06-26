@@ -44,7 +44,7 @@ class Request
         $value = isset($_POST[$varname]) ? trim(htmlspecialchars($_POST[$varname])) : false;
 
         if(!$value) {
-            throw new RuntimeException();
+            throw new RuntimeException("Error 404");
         }
 
         return $value;

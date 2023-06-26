@@ -33,6 +33,9 @@ class AuthController extends Controller
 
         $formBuilder
             ->add(
+                (new Input('pseudo', ['id' => 'pseuso', 'class' => 'form-control']))
+                    ->withLabel('Pseudo')
+            )->add(
                 (new Input('firstname', ['id' => 'firstname', 'class' => 'form-control']))
                     ->withLabel('Prénom')
             )->add(
@@ -58,12 +61,13 @@ class AuthController extends Controller
 
         if ($formBuilder->handleRequest($request)->isSubmitted() && $formBuilder->isValid()) {
 
+            $pseudo = Request::getData('pseudo');
             $firstname = Request::getData('firstname');
             $lastname = Request::getData('lastname');
             $email = Request::getData('email');
             $password = Request::getData('password');
 
-            $this->userRepository->registerUser($firstname, $lastname, $email, $password);
+            $this->userRepository->registerUser($pseudo,$firstname, $lastname, $email, $password);
 
             return header('location: /');
         }

@@ -3,9 +3,9 @@
 
 use App\Controller\AuthController;
 use App\Controller\ContactController;
+use App\Controller\HomeController;
 use App\Controller\LoginController;
 use App\Controller\LogoutController;
-use App\Controller\SiteController;
 use Core\Application;
 use Core\Request;
 use Core\Session;
@@ -15,13 +15,13 @@ Session::start();
 
 $app = new Application();
 
-$app->getRouter()->get('/home', static function (Request $request) {
-    return (new SiteController())->home($request);
+$app->getRouter()->get('/', static function (Request $request) {
+    return (new HomeController())->contact($request);
 });
 
-$app->getRouter()->get('/', static function (Request $request) {
-    return (new SiteController())->home($request);
-});
+//$app->getRouter()->get('/', static function (Request $request) {
+//    return (new HomeController())->home($request);
+//});
 
 $app->getRouter()->get('/contact', static function (Request $request) {
     return (new ContactController())->contact($request);
@@ -29,6 +29,14 @@ $app->getRouter()->get('/contact', static function (Request $request) {
 
 $app->getRouter()->post('/contact', static function (Request $request) {
     return (new ContactController())->contact($request);
+});
+
+$app->getRouter()->get('/home', static function (Request $request) {
+    return (new HomeController())->contact($request);
+});
+
+$app->getRouter()->post('/home', static function (Request $request) {
+    return (new HomeController())->contact($request);
 });
 
 //$app->getRouter()->get('/login', static function (Request $request) {
@@ -41,9 +49,9 @@ $app->getRouter()->get('/login', static function (Request $request) {
 $app->getRouter()->post('/login', static function (Request $request) {
     return (new LoginController())->login($request);
 });
-//$app->getRouter()->get('/logout', static function (Request $request) {
-//    return (new LogoutController())->logout($request);
-//});
+$app->getRouter()->get('/logout', static function (Request $request) {
+    return (new LogoutController())->logout($request);
+});
 
 $app->getRouter()->get('/register', static function (Request $request ) {
     return (new AuthController())->handleRegister($request);

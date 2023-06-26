@@ -3,11 +3,15 @@
 namespace App\repository;
 
 use App\Model\User;
+use App\SessionBlog;
 use Core\Db\BaseManager;
+use Core\Session;
 use PDO;
 
 class UserRepository extends BaseManager
 {
+
+
     public function getAllUsers(): ?User
     {
 
@@ -20,14 +24,15 @@ class UserRepository extends BaseManager
         return !$rst ? null : $rst;
     }
 
-    public function registerUser(string $firstname, string $lastname, string $email, string $password): string
+    public function registerUser(string $pseudo, string $firstname, string $lastname, string $email, string $password): string
     {
-        $hash = md5($password);
+        $pswHash = md5($password);
+        $status = 'visitor';
         $req = $this->getCnx()->prepare(
-            'INSERT INTO user (firstname, lastname, email, password)
-            VALUES (?, ?, ?, ?)');
+            'INSERT INTO user (pseudo,email, password, fk_user_status, firstname, lastname)
+            VALUES (?, ?, ?, ?, ?, ?)');
 
-        return $req->execute(array($firstname, $lastname, $email, $hash));
+        return $req->execute(array($pseudo,$email, $pswHash, $status, $firstname, $lastname));
     }
 
     public function getUserLogin(string $email, string $password) : ?User
@@ -35,9 +40,9 @@ class UserRepository extends BaseManager
         $pwdHash = md5($password);
 
         $query = $this->getCnx()->prepare(
-            'SELECT u.password, u.email
-                FROM user u
-                WHERE u.email = ? AND u.password = ?');
+            'SELECT password, email, pseudo, firstname, lastname
+                FROM user 
+                WHERE email = ? AND password = ?');
 
         $query->setFetchMode(\PDO::FETCH_CLASS, User::class);
 
@@ -48,4 +53,20 @@ class UserRepository extends BaseManager
         $result = $query->fetch();
         return !$result ? null : $result;
     }
+    
+    public static function userIsConnected(): bool
+    {
+        if (!empty((new SessionBlog())->get('username'))) {
+            return true;
+        }
+        return false;
+    }
+
+//    public static function userIsConnected(): bool
+//    {
+//        if (!empty((new Session())->get('username'))) {
+//            return true;
+//        }
+//        return false;
+//    }
 }

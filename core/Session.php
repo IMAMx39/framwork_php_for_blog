@@ -21,31 +21,22 @@ class Session
         $_SESSION[$key] = $value;
     }
 
-    public static function setUser(User $user)
+    public function get($key)
     {
-        if (session_status() != PHP_SESSION_ACTIVE){
-            Session::start();
+        if (isset($_SESSION[$key])) {
+            return $_SESSION[$key];
         }
-        $_SESSION['username'] = $user->getEmail();
-        return Session::isLogged();
+        return null;
     }
 
-    public static function isLogged() : bool
-    {
 
-        if(session_status() != PHP_SESSION_ACTIVE) {
-            Session::Start();
-        }
-
-        session_regenerate_id();
-
-        return isset($_SESSION['username']);
-    }
 
     public static function start(): void
     {
         if (session_status() !== PHP_SESSION_ACTIVE) {
+            ini_set('session.use_strict_mode', 1); // Ensure strict mode
             \session_start();
+
         }
     }
 
@@ -55,4 +46,8 @@ class Session
         unset($_SESSION[$key]);
     }
 
+    public static function GetUsername() : ?string
+    {
+        return isset($_SESSION['username']) ? $_SESSION['username'] : null;
+    }
 }

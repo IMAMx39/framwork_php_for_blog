@@ -11,6 +11,7 @@ use Core\Form\FormBuilder;
 <h1>Register</h1>
 
 <?php echo $form->start(); ?>
+<?php echo $form->row('pseudo'); ?>
 <?php echo $form->row('firstname'); ?>
 <?php echo $form->row('lastname'); ?>
 <?php echo $form->row('email'); ?>
