@@ -72,12 +72,4 @@ class AuthController extends Controller
         ]);
 
     }
-
-    public function users(): Response
-    {
-        $users = [
-            'users', $this->userRepository->getAllUsers()
-        ];
-        return $this->render('users', $users);
-    }
 }

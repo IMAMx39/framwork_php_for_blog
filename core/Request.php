@@ -7,7 +7,7 @@ use RuntimeException;
 
 class Request
 {
-    public function getPath(): string
+    public function getUri(): string
     {
         return $_SERVER['REQUEST_URI'] ?? '/';
     }

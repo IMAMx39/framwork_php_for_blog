@@ -7,6 +7,7 @@ class Router
 {
     public Request $request;
     private array $routes = [];
+    private array $params = [];
 
     public function any(string $path, callable $callback): void
     {
@@ -16,20 +17,36 @@ class Router
 
     public function get(string $path, callable $callback): void
     {
-        $this->routes['get'][$path] = $callback;
+        $this->routes['GET'][$path] = $callback;
     }
 
     public function post(string $path, callable $callback): void
     {
-        $this->routes['post'][$path] = $callback;
+        $this->routes['POST'][$path] = $callback;
     }
 
-    public function resolve(Request $request): ?callable
+    public function resolve(Request $request): array
     {
-        $path = $request->getPath();
+        $matches = [];
+        $regex = '';
+        $path = $request->getUri() ;
         $method = $request->method();
 
-        return $this->routes[strtolower($method)][$path] ?? null;
+        foreach ($this->routes[$method] as $key => $value) {
+            if (preg_match($key,$path,$matches) != 1){
+                continue;
+            }
+
+            $regex = $key;
+
+            if (count($matches) > 1){
+                \array_shift($matches);
+                $this->params = $matches;
+            }
+            break;
+        }
+
+        return [$this->routes[$method][$regex] ?? null,$this->params] ;
 
     }
 }

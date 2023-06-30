@@ -3,30 +3,32 @@
 namespace App\Repository;
 
 use App\Model\User;
-use App\SessionBlog;
-use Core\Db\BaseManager;
+use Core\Db\Manager;
 use PDO;
 
-class UserRepository extends BaseManager
+class UserRepository extends Manager
 {
 
 
-    public function getAllUsers(): ?User
+    public function getAllUsers(): array
     {
 
-        $query = $this->getCnx()->prepare(
-            'SELECT firstname,lastname,email,password FROM user'
+        $query = $this->getCnxConfig()->prepare(
+            'SELECT pseudo,email, fk_user_status as status,firstname,lastname FROM user
+                    where fk_user_status = "visitor" or fk_user_status = "banned" order by pseudo'
         );
         $query->setFetchMode(PDO::FETCH_CLASS, User::class);
+
         $query->execute();
-        $rst = $query->fetch();
-        return !$rst ? null : $rst;
+        $result = $query->fetchAll();
+        return !$result ? [] : $result;
     }
 
     public function register(User $user, string $hashedPassword): bool
     {
         $status = 'visitor';
-        $req = $this->getCnx()->prepare(
+
+        $req = $this->getCnxConfig()->prepare(
             'INSERT INTO user (pseudo,email, password, fk_user_status, firstname, lastname)
             VALUES (?, ?, ?, ?, ?, ?)');
 
@@ -43,9 +45,8 @@ class UserRepository extends BaseManager
     public function getUser(string $email): ?User
     {
 
-        $query = $this->getCnx()->prepare(
-            'SELECT password, email, pseudo, firstname, lastname
-                FROM user 
+        $query = $this->getCnxConfig()->prepare(
+            'SELECT password, email, pseudo, firstname, lastname, fk_user_status as status   FROM user 
                 WHERE email = ?');
 
         $query->setFetchMode(PDO::FETCH_CLASS, User::class);

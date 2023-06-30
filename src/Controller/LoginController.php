@@ -64,7 +64,7 @@ class LoginController extends Controller
 
         return $this->render('login', [
             "form" => $form,
-            "errors" => $errors
+            "errors" => $errors,
         ]);
     }
 

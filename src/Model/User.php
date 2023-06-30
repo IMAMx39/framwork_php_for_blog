@@ -9,6 +9,7 @@ class User
     private string $email;
     private string $password;
     private string $pseudo;
+    private string $status;
 
     /**
      * @return string
@@ -20,6 +21,7 @@ class User
 
     /**
      * @param string $pseudo
+     * @return User
      */
     public function setPseudo(string $pseudo): self
     {
@@ -27,6 +29,23 @@ class User
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     * @return User
+     */
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+        return $this;
+    }
 
 
     /**
@@ -39,6 +58,7 @@ class User
 
     /**
      * @param string $firstname
+     * @return User
      */
     public function setFirstname(string $firstname): self
     {

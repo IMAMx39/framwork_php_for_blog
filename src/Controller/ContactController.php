@@ -25,6 +25,7 @@ class ContactController extends Controller
      * @throws SyntaxError
      * @throws RuntimeError
      * @throws LoaderError
+     * @throws TransportExceptionInterface
      */
     public function contact(Request $request): Response
     {
@@ -78,7 +79,7 @@ class ContactController extends Controller
             ->from($email)
             ->to('ggo@p5phpblog.net')
             ->subject('[Amazing Blog - Contact] : '.$username)
-            ->text('Message reçu de la part de : '.$username.' ('.$email.') -> '.$subject)
+            ->text('Vous avez reçu un email de la part de : '.$username.' ('.$email.') -> '.$subject)
             ->html($this->render('contact', $data));
 
         $mailer->send($mail);

@@ -22,6 +22,9 @@ final class UserService
 
     public function getUserFromSession(): ?User
     {
+        if ($this->session->get('user') == ''){
+            return null;
+        }
         return $this->session->get('user');
     }
 
@@ -41,5 +44,13 @@ final class UserService
     public function login(User $user): void
     {
         $this->session->set('user', $user);
+    }
+    public static function IsUserAdmin() : bool
+    {
+        return isset($_SESSION['admin']) && $_SESSION['admin'] == true;
+    }
+    public static function isAdmin()
+    {
+
     }
 }

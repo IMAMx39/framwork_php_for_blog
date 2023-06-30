@@ -1,35 +1,62 @@
+<?php
 
-<h2 class="text-center" style="margin-bottom: 2rem">Chat-dev, could you provide me with a keyboard? <br> I will create some regex for you.</h2>
-<p class="mt-5">I found what I need. And it's not friends, it's things.
-    Goodbye, cruel world. Goodbye, cruel lamp. Goodbye, cruel velvet drapes, lined with what would appear to be some
-    sort of cruel muslin and the cute little pom-pom curtain pull cords. Cruel though they may be… I've got to find
-    a way to escape the horrible ravages of youth. Suddenly, I'm going to the bathroom like clockwork, every three
-    hours. And those jerks at Social Security stopped sending me checks. Now 'I'' have to pay ''them'!
-    Incidentally, you have a dime up your nose. Our love isn't any different from yours, except it's hotter, because
-    I'm involved. Leela's gonna kill me. Who said that? SURE you can die! You want to die?!</p>
-<div class="d-flex justify-content-center">
-    <a href="" class="mt-4 btn btn-primary">My resume</a>
+/**
+ *  @var FormBuilder $form
+ * @var HomeController $user
+ */
+
+use App\Controller\HomeController;
+use Core\Form\FormBuilder;
+
+?>
+
+<div class="mb-4">
+    <header class="container  px-4 px-lg-5" style="background-color: aquamarine)">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading col-md-10 col-lg-8 col-xl-7">
+                        <h1>
+                           <?php echo 'Welcome to my blog '.$user ?>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 </div>
+<!-- Main Content-->
+<main class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
 
+                <p>
+                    Bienvenu !
+                    Eius praesentium recusandae illo eaque architecto error, repellendus iusto reprehenderit, doloribus, minus sunt.
+                    Numquam at quae voluptatum in officia voluptas voluptatibus, minus!
+                </p>
+
+                <hr class="my-4" />
+                <h3 class="text-center" style="text-decoration: underline;">
+                    <a class="btn btn-primary" role="button" href="assets/downloads/CV_John_Doe.pdf" download="CV-GGO.pdf">Téléchargez mon CV !</a>
+                </h3>
+
+                <hr class="my-4" />
+                <p>Vous souhaitez me contacter ? Remplissez le formulaire ci-dessous, et à très vite !</p>
+            </div>
+        </div>
+    </div>
+</main>
 <div class="row mt-5 justify-content-md-center" id="contact">
     <div class="col-6">
         <h2 class="text-center">Send me a message</h2>
-        <?php
-
-        /**
-         *  @var FormBuilder $form
-         */
-
-        use Core\Form\FormBuilder;
-
-        ?>
 
         <?php echo $form->start(); ?>
         <?php echo $form->row('username'); ?>
         <?php echo $form->row('email'); ?>
         <?php echo $form->row('subject'); ?>
-
-        <button type="submit"  value="submit" class="btn btn-primary mt-4 me-lg-4">Valider</button>
+        <button type="submit"  value="submit" class="btn btn-primary mt-4 me-lg-4">Envoyer</button>
         <?php echo $form->end(); ?>
     </div>
 </div>

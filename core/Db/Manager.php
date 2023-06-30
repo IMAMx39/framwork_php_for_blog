@@ -4,11 +4,11 @@ namespace Core\Db;
 use Core\Db\Config\ConfigDb;
 use PDO;
 
-class BaseManager
+class Manager
 {
     private static PDO $cnx;
 
-    protected static function getCnx() : PDO
+    protected static function getCnxConfig() : PDO
     {
         if (!isset(self::$cnx))
         {

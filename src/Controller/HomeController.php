@@ -30,37 +30,41 @@ class HomeController extends Controller
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function contact(Request $request): Response
+    public function contact(Request $request ): Response
     {
-        $user = $this->userService->getUserFromSession();
 
+
+        $user = $this->userService->getUserFromSession();
 
         $formContact = new FormBuilder();
 
-        $formContact
-            ->add(
-                (new Input('username', ['id' => 'username', 'class' => 'form-control']))
-                    ->withLabel('Nom et Prénom')
-            )->add(
-                (new Email('email', ['id' => 'email', 'class' => 'form-control']))
-                    ->withLabel('Email')
-            )->add(
-                (new Textarea('subject', ['id' => 'subject', 'class' => 'form-control']))
-                    ->withLabel('Votre message')
-            );
+        $formContact->add((new Input('username', ['id' => 'username', 'class' => 'form-control']))
+            ->withLabel('Nom et Prénom'))
+                    ->add((new Email('email', ['id' => 'email', 'class' => 'form-control']))
+                        ->withLabel('Email'))
+                    ->add((new Textarea('subject', ['id' => 'subject', 'class' => 'form-control']))
+                        ->withLabel('Votre message'));
 
         if ($formContact->handleRequest($request)->isSubmitted() && $formContact->isValid()) {
 
             $username = $request->post('username');
-            $email =  $request->post('email');
-            $subject =  $request->post('subject');
+            $email = $request->post('email');
+            $subject = $request->post('subject');
 
 
         }
 
-        return $this->render('home', [
+        $data = [
             "form" => $formContact,
-        ]);
+            "user" => $user?->getPseudo()
+        ];
+
+        return $this->render('home', $data);
+    }
+
+    private  static function userIsLogged()
+    {
+
     }
 
 }
