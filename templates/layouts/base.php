@@ -1,12 +1,9 @@
 <?php
 
 /**
- *  @var FormBuilder $form
- * @var HomeController $user
+ * @var UserService $user
  */
-
-use App\Controller\HomeController;
-use Core\Form\FormBuilder;
+use App\Service\UserService;
 
 ?>
 
@@ -17,13 +14,13 @@ use Core\Form\FormBuilder;
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MVC Framework</title>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/journal/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/journal/_variables.scss">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/lux/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/lux/_variables.scss">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">Blog</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -34,14 +31,15 @@ use Core\Form\FormBuilder;
             <ul class="navbar-nav mr-auto ">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="/postList">Les posts</a></li>
-                <li class="nav-item"><a class="nav-link active" href="/register">Register</a></li>
                 <li class="nav-item"><a class="nav-link active" href="/contact">Contact</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/register">Register</a></li>
+
             </ul>
-            <ul class="navbar-nav d-flex">
+            <ul class="navbar-nav d-flex" style="margin-left: auto">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Coucou</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item "  href="">Administration</a>
+                        <a class="dropdown-item "href="/admin">Administration</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item"  href="/logout">Se déconnecter</a>
                     </div>

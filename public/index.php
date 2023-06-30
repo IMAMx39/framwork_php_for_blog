@@ -40,17 +40,24 @@ $app->getRouter()->any('/^\/login$/', static function (Request $request) {
     return (new LoginController())->login($request);
 });
 
-$app->getRouter()->any('/^\/admin$/', static function () {
-    return (new AdminController())->admin();
+$app->getRouter()->any('/^\/admin$/', static function (Request $request,array $action) {
+    return (new AdminController())->index($request, $action);
+});
+
+$app->getRouter()->any('/^\/admin\/([a-z]+)$/', static function (Request $request,array  $action) {
+    return (new AdminController())->admin($request,$action);
+});
+$app->getRouter()->any('/^\/admin\/([a-z]+)$/', static function (Request $request,array  $action) {
+    return (new AdminController())->createPost($request,$action);
 });
 
 $app->getRouter()->any('/^\/users$/', static function (Request $request) {
     return (new AdminController())->displayUsers($request);
 });
 
-$app->getRouter()->any('/^\/posts$/', static function (Request $request) {
-    return (new AdminController())->adminPost($request);
-});
+//$app->getRouter()->any('/^\/posts$/', static function (Request $request) {
+//    return (new AdminController())->adminPost($request);
+//});
 
 
 

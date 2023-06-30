@@ -28,16 +28,15 @@ class PostController extends Controller
      */
     public function index(Request $request, array $args): Response
     {
-        $id = [];
         $post = $this->postRepository->getPostByID($args[0]);
         if(!$post) {
             throw new RuntimeException("Ce post n'existe pas.");
         }
-
         $data = [
-            'post' => $post,
+          'post' => $post
         ];
-        return $this->render('post',$data);
+
+        return $this->render('post', $data);
 
     }
 

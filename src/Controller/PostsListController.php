@@ -19,11 +19,6 @@ class PostsListController extends Controller
         $this->postRepository = new PostRepository();
     }
 
-    /**
-     * @throws SyntaxError
-     * @throws RuntimeError
-     * @throws LoaderError
-     */
     public function index(): Response
     {
         $posts = $this->postRepository->getAllPosts();

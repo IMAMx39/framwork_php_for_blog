@@ -61,10 +61,4 @@ class HomeController extends Controller
 
         return $this->render('home', $data);
     }
-
-    private  static function userIsLogged()
-    {
-
-    }
-
 }

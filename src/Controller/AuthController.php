@@ -29,24 +29,24 @@ class AuthController extends Controller
 
         $formBuilder
             ->add(
-                (new Input('pseudo', ['id' => 'pseuso', 'class' => 'form-control']))
+                (new Input('pseudo', ['id' => 'pseuso', 'class' => 'form-control']))->required()
                     ->withLabel('Pseudo')
             )->add(
                 (new Input('firstname', ['id' => 'firstname', 'class' => 'form-control']))
-                    ->withLabel('Prénom')
+                    ->withLabel('Prénom')->required()
             )->add(
                 (new Input('lastname', ['id' => 'lastname', 'class' => 'form-control']))
-                    ->withLabel('Nom')
+                    ->withLabel('Nom')->required()
             )->add(
                 (new Email('email', ['id' => 'email', 'class' => 'form-control']))
-                    ->withLabel('Email')
+                    ->withLabel('Email')->required()
             )->add(
-                (new Password('password', ['id' => 'password', 'class' => 'md-4 form-control']))
-                    ->withLabel('Mot de passe')
+                (new Password('password', ['id' => 'password', 'class' => 'form-control']))
+                    ->withLabel('Mot de passe')->required()
             );
 
+        $errors = [];
         if ($formBuilder->handleRequest($request)->isSubmitted() && $formBuilder->isValid()) {
-
             $pseudo = $request->post('pseudo');
             $firstname = $request->post('firstname');
             $lastname = $request->post('lastname');
@@ -65,10 +65,14 @@ class AuthController extends Controller
 
             header('location: /');
             exit();
+
         }
 
+
+
         return $this->render('register', [
-            'form' => $formBuilder
+            "form" => $formBuilder,
+            'errors' => $errors
         ]);
 
     }

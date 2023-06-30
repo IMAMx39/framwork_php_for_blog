@@ -2,6 +2,7 @@
 
 /**
  * @var FormBuilder $form
+ * @var array $errors
  */
 
 use Core\Form\FormBuilder;
@@ -9,7 +10,9 @@ use Core\Form\FormBuilder;
 ?>
 
 <h1>Register</h1>
-
+<?php if ($errors !== []) : ?>
+    <p style="padding: 0.5em; background-color: red; color: white"><?php echo implode(', ', $errors); ?></p>
+<?php endif; ?>
 <?php echo $form->start(); ?>
 <?php echo $form->row('pseudo'); ?>
 <?php echo $form->row('firstname'); ?>

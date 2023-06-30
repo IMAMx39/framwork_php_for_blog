@@ -6,6 +6,7 @@ use Core\Form\Field;
 
 class Input extends Field
 {
+    private bool $required = false;
 
     protected function template(): string
     {
@@ -14,9 +15,16 @@ class Input extends Field
             $attributes[] = "{$key}={$value}";
         }
         return sprintf(
-            '%s<input type="text" name="%s" %s>',
+            '%s<input type="text" name="%s" %s %s>',
             $this->label,
             $this->name,
-            implode(' ', $attributes));
+            implode(' ', $attributes),$this->required ? 'required' : '');
+    }
+
+
+    public function required(): self
+    {
+        $this->required = true;
+        return $this;
     }
 }

@@ -7,6 +7,9 @@ use Core\Form\Field;
 class Email extends Field
 {
 
+    private bool $required = false;
+
+
     protected function template(): string
     {
         $attributes = [];
@@ -14,9 +17,15 @@ class Email extends Field
             $attributes[] = "{$key}={$value}";
         }
         return sprintf(
-            '%s<input type="email" name="%s" %s>',
+            '%s<input type="email" name="%s" %s %s>',
             $this->label,
             $this->name,
-            implode(' ', $attributes));
+            implode(' ', $attributes), $this->required ? 'required' : '');
+    }
+
+    public function required(): self
+    {
+        $this->required = true;
+        return $this;
     }
 }

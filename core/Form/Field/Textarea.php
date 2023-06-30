@@ -7,18 +7,7 @@ use Core\Form\Field;
 class Textarea extends Field
 {
 
-//    public function __toString(): string
-//    {
-//        $field = '<input type="text" name="' . $this->name . '"';
-//
-//        foreach ($this->attributes as $attribute => $value) {
-//            $field .= ' ' . $attribute . '="' . $value . '"';
-//        }
-//
-//        $field .= '>';
-//
-//        return $field;
-//    }
+    private bool $required = false;
 
     protected function template(): string
     {
@@ -27,9 +16,17 @@ class Textarea extends Field
             $attributes[] = "{$key}={$value}";
         }
         return sprintf(
-            '%s<textarea type="text" name="%s" %s></textarea>',
+            '%s<textarea type="text" name="%s" %s %s></textarea>',
             $this->label,
             $this->name,
-            implode(' ', $attributes));
+            implode(' ', $attributes),$this->required ?'required':'');
     }
+
+    public function required(): self
+    {
+        $this->required = true;
+        return $this;
+    }
+
+
 }

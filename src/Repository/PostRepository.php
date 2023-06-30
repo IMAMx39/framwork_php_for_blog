@@ -47,4 +47,23 @@ class PostRepository extends Manager
         return $req->fetch();
     }
 
+    public function updatePost(Post $post) : bool
+    {
+        $req = $this->getCnxConfig()->prepare(
+            'UPDATE post  SET title = ?, head = ?, content = ?, updatedAt = now()  WHERE id = ?');
+
+        return $req->execute([
+            $post->getTitle(),
+            $post->getHead(),
+            $post->getContent(),
+            $post->getId()]);
+    }
+
+    public function deletePost(int $postId) : bool
+    {
+        $req = $this->getCnxConfig()->prepare('DELETE FROM post WHERE id = ?');
+
+        return $req->execute([($postId)]);
+    }
+
 }
