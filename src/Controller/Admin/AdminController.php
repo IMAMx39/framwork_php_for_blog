@@ -98,7 +98,7 @@ class AdminController extends Controller
                 ->setHead($head)
                 ->setContent($content);
              $this->postRepository->createPost($post,
-                $this->userService->getUserFromSession()->getStatus() === 'admin');
+                $this->userService->getUserFromSession()->getPseudo());
         }
 
         return $this->render('adminPost', [

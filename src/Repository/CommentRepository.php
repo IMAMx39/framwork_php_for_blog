@@ -8,7 +8,7 @@ use Core\Db\Manager;
 class CommentRepository extends Manager
 {
 
-    public function getCommentsOfPostID(int $postId) : array
+    public function getCommentsOfPostById(int $postId) : array
     {
         $req = $this->getCnxConfig()->prepare(
             'SELECT c.id, c.content, c.createdAt , c.fk_comment_status status,
@@ -32,7 +32,7 @@ class CommentRepository extends Manager
 
         return $req->execute([$postId, $username, $status, $comment]);
     }
-    
+
     public function deleteById(int $id): bool
     {
         $query = $this->getCnxConfig()->prepare('delete from comment where id =?');
