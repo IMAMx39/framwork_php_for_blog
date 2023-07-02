@@ -3,6 +3,7 @@
 
 use App\Controller\Admin\AdminController;
 use App\Controller\AuthController;
+use App\Controller\CommentController;
 use App\Controller\ContactController;
 use App\Controller\HomeController;
 use App\Controller\LoginController;
@@ -21,6 +22,10 @@ $app->getRouter()->get('/^\/$/', static function (Request $request) {
 });
 $app->getRouter()->any('/^\/articles\/([0-9]+)$/', static function (Request $request, array $args) {
     return (new PostController())->index($request, $args );
+});
+
+$app->getRouter()->any('/^\/comment\/([a-z]+)$/', static function (Request $request, array $action) {
+    return (new CommentController())->index($request, $action );
 });
 
 $app->getRouter()->any('/^\/contact$/', static function (Request $request) {

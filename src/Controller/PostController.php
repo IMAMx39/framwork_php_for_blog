@@ -24,11 +24,7 @@ class PostController extends Controller
         $this->commentRepository = new CommentRepository();
     }
 
-    /**
-     * @throws SyntaxError
-     * @throws RuntimeError
-     * @throws LoaderError
-     */
+
     public function index(Request $request, array $args): Response
     {
         $post = $this->postRepository->getPostByID($args[0]);

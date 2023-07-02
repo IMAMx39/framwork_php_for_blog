@@ -3,9 +3,13 @@
 /**
  * @var PostController $post
  * @var PostController $data
+ * @var FormBuilder $form
+ * @var array $errors
  */
 
+
 use App\Controller\PostController;
+use Core\Form\FormBuilder;
 
 ?>
 
@@ -30,32 +34,29 @@ use App\Controller\PostController;
         </div>
     </div>
 </article>
+
 <div class="mb-4 container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
         <div class="col-md-10 col-lg-8 col-xl-7">
-<!--            {% if session_username %}-->
-<!--            <hr class="my-4"/>-->
-<!--            <h4>{{ session_username }}, donnez-nous votre avis :</h4>-->
-<!--            <br/>-->
-<!---->
-<!--            <form id="commentForm" action="/comment/add" method="post" data-sb-form-api-token="">-->
-<!--                <div class="form-group">-->
-<!--                    <div class="mb-0">-->
-<!--                                <textarea class="form-control" name="commentContent" rows="3"-->
-<!--                                          placeholder="Votre message"></textarea>-->
-<!--                        <small class="form-text text-muted"><em>Le commentaire sera validé par un modérateur-->
-<!--                                avant d'apparaître.</em></small>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <input type="hidden" name="postId" value="{{ postId }}">-->
-<!--                <br/>-->
-<!--                <div class="row justify-content-center">-->
-<!--                    <input type="submit" id="submitButton"-->
-<!--                           class="col-md-3 col-sm-6 btn btn-primary text-uppercase rounded" value='Envoyer'>-->
-<!--                </div>-->
-<!--            </form>-->
-<!---->
-<!--            {% endif %}-->
+            <hr class="my-4"/>
+            <h4>{{ session_username }}, donnez-nous votre avis :</h4>
+            <br/>
+            <form id="commentForm" action="/comment/add" method="post" data-sb-form-api-token="">
+                <div class="form-group">
+                    <div class="mb-0">
+                                <textarea class="form-control" name="commentContent" rows="3"
+                                          placeholder="Votre message"></textarea>
+                        <small class="form-text text-muted"><em>Le commentaire sera validé par un modérateur
+                                avant d'apparaître.</em></small>
+                    </div>
+                </div>
+                <input type="hidden" name="postId" value="<?php echo $data['postId']?>">
+                <br/>
+                <div class="row justify-content-center">
+                    <input type="submit" id="submitButton"
+                           class="col-md-3 col-sm-6 btn btn-primary text-uppercase rounded" value='Envoyer'>
+                </div>
+            </form>
 
             <hr class="my-4"/>
             <h3>Commentaires publiés</h3>

@@ -39,12 +39,15 @@ class Request
         return $_POST;
     }
 
-    public function post(string $key) : string
+    public function post(string $key, $isNum = false) : string
     {
         if (!array_key_exists($key, $_POST) ) {
             throw new \InvalidArgumentException($key. ' not exist');
         }
+        if ($isNum && !is_numeric($_POST[$key])) {
 
+            throw new RuntimeException('Un problème est survenu avec les données envoyées.');
+        }
         return trim(htmlspecialchars($_POST[$key]));
     }
 }
