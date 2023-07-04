@@ -36,10 +36,14 @@ class AdminController extends Controller
     public function index(Request $request, ?array $action): Response
     {
         $user = $this->userService->getUserFromSession();
+        if(!$user && !$user->getStatus() == 'admin') {
+            throw new \Exception('HTTP/1.0 403 Forbidden');
+        }
 
         if ($user->getStatus() !== 'admin') {
             header('location: /home');
         }
+
         if (empty($action)) {
             return $this->displayPostsPanel();
         }
@@ -48,6 +52,9 @@ class AdminController extends Controller
 
     }
 
+    /**
+     * @throws Exception
+     */
     private function handleAction(string $action): Response
     {
         $request = new Request();
@@ -86,7 +93,7 @@ class AdminController extends Controller
     }
 
 
-    public function createPost(?int $postId): ?Post
+    public function createPost(?int $postId): Post
     {
 
         $request = new Request();
@@ -103,7 +110,7 @@ class AdminController extends Controller
 
 
         header('location: /articles/' . $postId);
-        exit();
+
     }
 
     private function displayPostsPanel(): Response

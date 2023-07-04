@@ -38,6 +38,9 @@ class PostRepository extends Manager
 
     public function getPostByID(int $id) : ?Post
     {
+        if(!$id) {
+            return null;
+        }
         $req = $this->getCnxConfig()->prepare(
             'SELECT id, title, head, content, createdAt , updatedAt , pseudo author FROM post, user 
                 WHERE post.fk_user_pseudo = user.pseudo AND post.id = ?');
