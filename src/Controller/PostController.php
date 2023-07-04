@@ -34,7 +34,7 @@ class PostController extends Controller
             throw new RuntimeException("Ce post n'existe pas.");
         }
         $data = [
-            "user" => !$user,
+            "user" => $user,
             "post" => $post,
             "comments" => $comments,
             "postId" => $args[0]

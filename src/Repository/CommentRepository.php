@@ -25,7 +25,7 @@ class CommentRepository extends Manager
 
     public function addOnPostID(int $postId, string $comment, string $username, bool $isAdmin) : bool
     {
-        $status = $isAdmin ? 'approved' : 'not_approval';
+        $status = $isAdmin ? 'approved' : 'not_approved';
         $req = $this->getCnxConfig()->prepare(
             'INSERT INTO comment (fk_post_id, fk_user_pseudo, fk_comment_status, content, createdAt)
                 VALUES (?, ?, ?, ?, now() )');

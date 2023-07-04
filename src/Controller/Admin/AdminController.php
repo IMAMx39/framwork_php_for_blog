@@ -116,6 +116,8 @@ class AdminController extends Controller
         }
 
         $data['posts'] = $posts;
+        $data['comments'] = $postComments;
+
 
         return $this->render('admin', $data);
     }

@@ -25,8 +25,7 @@ use App\Model\Comment;
                 </div>
             </div>
             <hr class="my-4" />
-            <?php
-            foreach ($data['posts'] as $post) :?>
+            <?php foreach ($data['posts'] as $post) :?>
 
             <div class="post-preview text-center" style="margin-bottom: 1.5rem; ">
                 <div href="/articles/<?php echo $post->getID()?>">
@@ -35,36 +34,47 @@ use App\Model\Comment;
                 <div class="post-meta">
                     Par <a href="#0"><?php echo $post->getAuthor(); ?></a> le  <?php echo $post->getCreatedAt(); ?>
                 </div>
-                <?php if ($post->getComments() == 'not_Approved'){?>
-                    <?php  ?>
-                <?php }?>
+
+
+
 
                 <?php  ?>
-                <div class="border border-secondary rounded alert alert-warning">
-                    <a href="/articles/<?php echo $post->getID()?>">
-                        Commentaires en attente : <strong><?php echo count($post->getComments())?></strong>
-                    </a>
-                </div>
-                <?php { ?>
-                <div class="alert alert-dismissible alert-info">
-                    Aucun commentaire en attente
-                </div>
+                <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-bs-original-title="Popover Title" aria-describedby="popover958938">Left</button>
+                <?php
+
+                $comments = $post->getComments();
+
+                $commentsNotApproved = count(array_filter($comments, function($comment) {
+                    return $comment->getStatus() == 'not_approved';
+                }));
+
+                ?>
+
+                <?php if ($commentsNotApproved > 0 ) {?>
+                <li href="/articles/<?php echo $post->getID()?>" class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">
+                    Commentaires en attente<span class="rounded-pill badge bg-warning"><?php echo $commentsNotApproved?></span>
+                </li>
+                <?php }else{ ?>
+                <li  class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">
+                    Aucun commentaire en attente<span class="rounded-pill badge bg-info"></span>
+                </li>
                 <?php } ?>
+
             </div>
                 <div class="form-buttons" style="display: flex; justify-content: space-around;">
                     <form action="/admin/edit" method="post">
                         <input type="hidden" name="postId" value="<?php echo $post->getID()?>" />
-                        <input class="btn btn-info rounded" type="submit" value="Éditer" />
+                        <input class="btn btn-outline-info rounded" type="submit" value="Éditer" />
                     </form>
 
                     <a class="" href="/articles/<?php echo $post->getID()?>">
-                        <button class="btn btn-primary rounded">Voir</button>
+                        <button class="btn btn-outline-primary rounded">Voir</button>
                     </a>
 
                     <form action="/admin/delete" method="post">
                         <input type="hidden" name="postId" value="<?php echo $post->getID()?>" />
-                        <input class="btn btn-danger rounded" type="submit" value="Supprimer"
-                               onclick="return confirm('Êtes-vous sûr de vouloir supprimer : <?php echo $post->getTitle()?>?');"/>
+                        <input class="btn btn-outline-danger rounded" type="submit" value="Supprimer"
+                               onclick="return confirm('Vous voulez vraiment supprimer : <?php echo $post->getTitle()?>?');"/>
                     </form>
                 </div>
             <hr class="my-4" />

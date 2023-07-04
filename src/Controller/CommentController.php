@@ -87,7 +87,7 @@ class CommentController extends Controller
     {
         $user = $this->userService->getUserFromSession();
 
-        if(!!$user->getStatus() == 'Admin') {
+        if(!$user->getStatus() == 'Admin') {
             throw new RuntimeException();
         }
 
