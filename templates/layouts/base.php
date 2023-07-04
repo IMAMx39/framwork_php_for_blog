@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @var UserService $user
+ * @var User $user
  */
-use App\Service\UserService;
+
+use App\Model\User;
 
 ?>
 
@@ -16,11 +17,16 @@ use App\Service\UserService;
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/lux/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/lux/_variables.scss">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+            integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+            crossorigin="anonymous"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+
     <div class="container-fluid">
         <a class="navbar-brand" href="/">Blog</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -32,22 +38,38 @@ use App\Service\UserService;
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="/postList">Les posts</a></li>
                 <li class="nav-item"><a class="nav-link active" href="/contact">Contact</a></li>
-                <li class="nav-item"><a class="nav-link active" href="/register">Register</a></li>
 
             </ul>
+
             <ul class="navbar-nav d-flex" style="margin-left: auto">
+                <?php if (isset($user)){ ?>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Coucou</a>
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="true" aria-expanded="true">
+                        <?php echo $user?->getPseudo() ?>
+                    </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item "href="/admin">Administration</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item"  href="/logout">Se déconnecter</a>
+                        <?php if ($user?->getStatus() == 'admin') {
+                            echo '<a class="dropdown-item" href="/admin">Administration</a>
+                                    <div class="dropdown-divider"></div>';
+                        } ?>
+                        <a class="dropdown-item" href="/logout">Se déconnecter</a>
                     </div>
                 </li>
+
             </ul>
-            <div class="d-flex">
-                <a class="nav-link" href="/login">Login</a>
-            </div>
+            <?php } ?>
+
+            <?php if ($user == null) { ?>
+                <div class="d-flex">
+                    <ul class="navbar-nav d-flex" style="margin-left: auto">
+                        <li class="nav-item"><a class="nav-link active" href="/register">Register</a></li>
+                    </ul>
+                    <a class="nav-link active" href="/login">Login</a>
+                </div>
+            <?php } ?>
+
+
         </div>
     </div>
 </nav>
@@ -56,18 +78,19 @@ use App\Service\UserService;
 </div>
 
 <!-- Footer-->
-<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top" >
+<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
     <p class="col-md-4 mb-0 text-muted"> Copyright &copy; IMAMOS95 2023 |
         <a href="">Coucou.</a></p>
 
-    <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+    <a href="/"
+       class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32">
+            <use xlink:href="#bootstrap"/>
+        </svg>
     </a>
 
     <ul class="nav col-md-4 justify-content-end">
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
     </ul>

@@ -50,20 +50,8 @@ $app->getRouter()->any('/^\/admin$/', static function (Request $request,array $a
 });
 
 $app->getRouter()->any('/^\/admin\/([a-z]+)$/', static function (Request $request,array  $action) {
-    return (new AdminController())->admin($request,$action);
+    return (new AdminController())->index($request,$action);
 });
-$app->getRouter()->any('/^\/admin\/([a-z]+)$/', static function (Request $request,array  $action) {
-    return (new AdminController())->createPost($request,$action);
-});
-
-$app->getRouter()->any('/^\/users$/', static function (Request $request) {
-    return (new AdminController())->displayUsers($request);
-});
-
-//$app->getRouter()->any('/^\/posts$/', static function (Request $request) {
-//    return (new AdminController())->adminPost($request);
-//});
-
 
 
 $app->getRouter()->get('/^\/logout$/', static function (Request $request) {

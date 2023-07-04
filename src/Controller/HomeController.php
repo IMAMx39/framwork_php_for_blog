@@ -38,9 +38,9 @@ class HomeController extends Controller
 
         $formContact = new FormBuilder();
 
-        $formContact->add((new Input('username', ['id' => 'username', 'class' => 'form-control']))
+        $formContact->add((new Input('username',['id' => 'username', 'class' => 'form-control']))
             ->withLabel('Nom et Prénom'))
-                    ->add((new Email('email', ['id' => 'email', 'class' => 'form-control']))
+                    ->add((new Email('email',  ['id' => 'email', 'class' => 'form-control']))
                         ->withLabel('Email'))
                     ->add((new Textarea('subject', ['id' => 'subject', 'class' => 'form-control']))
                         ->withLabel('Votre message'));

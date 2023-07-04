@@ -29,7 +29,7 @@ class LoginController extends Controller
 
         $form
             ->add(
-                (new Input('email', ['id' => 'email', 'class' => 'form-control']))
+                (new Input('email',['id' => 'email', 'class' => 'form-control']))
                     ->withLabel('Email')
                     ->required()
             )->add(

@@ -25,7 +25,7 @@ class CommentController extends Controller
         $this->userService = new UserService();
     }
 
-    function index(Request $request,array $action): Response
+    function index(Request $request,array $action):Response
     {
         $request = new Request();
         $postId = $request->post('postId', true);
@@ -37,24 +37,20 @@ class CommentController extends Controller
                 $this->add($comment, $postId);
                 break;
 
-//            case 'delete':
-//                $commentId =  $request->post('commentId', true);
-//                $this->delete($commentId);
-//                break;
-//
-//            case 'approve':
-//                $commentId =  $request->getData('commentId', true);
-//                $this->approve($commentId);
-//                break;
-
-//            default:
-//                $this->throwBadAction();
+            case 'delete':
+                $commentId =  $request->post('commentId', true);
+                $this->delete($commentId);
                 break;
+
+            case 'approve':
+                $commentId =  $request->post('commentId', true);
+                $this->approve($commentId);
+                break;
+
+
         }
-
-
-
-        return $this->render('post',$action[0]);
+        header('location: /articles/' . $postId);
+        exit();
     }
 
     private function add(string $comment, int $postId) : void
@@ -67,9 +63,39 @@ class CommentController extends Controller
         $rslt = $this->commentRepository->addOnPostID($postId, $comment, $username, $isAdmin);
 
         if(!$rslt) {
-            throw new RuntimeException('Un problème est survenu lors de l\'enregistrement du commentaire.');
+            throw new RuntimeException('Un problème est survenu..');
         }
 
+    }
+
+    private function approve(int $commentId) : void
+    {
+        $user = $this->userService->getUserFromSession();
+
+        if(!$user->getStatus() == 'Admin') {
+            throw new RuntimeException();
+        }
+
+        $rslt = $this->commentRepository->approveById($commentId);
+
+        if($rslt === false) {
+            throw new RuntimeException('Un problème est survenu.');
+        }
+    }
+
+    private function delete(int $commentId) : void
+    {
+        $user = $this->userService->getUserFromSession();
+
+        if(!!$user->getStatus() == 'Admin') {
+            throw new RuntimeException();
+        }
+
+        $rslt = $this->commentRepository->deleteById($commentId);
+
+        if(!$rslt) {
+            throw new RuntimeException('Un problème est survenu.');
+        }
     }
 
 }

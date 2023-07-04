@@ -13,6 +13,8 @@ class Post
     private $updatedAt;
     private string $author;
 
+    private array $comments = [];
+
     /**
      * @return mixed
      */
@@ -140,6 +142,17 @@ class Post
         return $this;
     }
 
+    public function getComments(): array
+    {
+        return $this->comments;
+    }
+
+    public function setComments(array $com) :self
+    {
+        $this->comments = $com;
+
+        return $this;
+    }
 
 
 }

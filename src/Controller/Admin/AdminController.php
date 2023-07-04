@@ -3,20 +3,14 @@
 namespace App\Controller\Admin;
 
 use App\Model\Post;
-use App\Model\User;
+use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use App\Service\UserService;
 use Core\Controller;
-use Core\Form\Field\Email as InputEmail;
-use Core\Form\Field\Input;
-use Core\Form\Field\Textarea;
-use Core\Form\FormBuilder;
 use Core\Request;
 use Core\Response;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
+use Exception;
 
 class AdminController extends Controller
 {
@@ -24,6 +18,7 @@ class AdminController extends Controller
     private UserRepository $userRepository;
     private UserService $userService;
     private PostRepository $postRepository;
+    private CommentRepository $commentRepository;
 
 
     public function __construct()
@@ -31,26 +26,53 @@ class AdminController extends Controller
         $this->userRepository = new UserRepository();
         $this->userService = new UserService();
         $this->postRepository = new PostRepository();
+        $this->commentRepository = new CommentRepository();
     }
 
-    public function index():Response
-    {
-        return $this->render('admin',[]);
-    }
-    public function admin(Request $request ,?array $action): Response
+    /**
+     * @throws Exception
+     */
+
+    public function index(Request $request, ?array $action): Response
     {
         $user = $this->userService->getUserFromSession();
 
-        if ($user->getStatus() === 'visitor'  ) {
+        if ($user->getStatus() !== 'admin') {
             header('location: /home');
         }
-
-        elseif ($user->getStatus() === 'admin')
-        {
-            $this->render('admin',[]);
+        if (empty($action)) {
+            return $this->displayPostsPanel();
         }
-        return $this->displayUsers();
+
+        return $this->handleAction($action[0]);
+
     }
+
+    private function handleAction(string $action): Response
+    {
+        $request = new Request();
+        // optionnal postId used for 'delete', 'edit' & 'post' action cases
+        $postId = $request->GetOrNull('postId', true);
+
+        switch ($action) {
+            case 'delete':
+                return $this->deletePost($postId);
+
+            case 'users':
+                return $this->displayUsers();
+
+            case 'edit':
+                return $this->displayPostEdit($postId);
+
+            case 'articles':
+                $post = $this->buildPostInstance($postId);
+                return $postId == 0 ? $this->createPost($postId) : $this->updatePost($post);
+
+            default:
+                throw new Exception('Action demandée invalide.');
+        }
+    }
+
 
     public function displayUsers(): Response
     {
@@ -58,53 +80,81 @@ class AdminController extends Controller
 
         $data = [
             'users' => $users,
-            ];
+        ];
 
         return $this->render('adminUsers', $data);
     }
 
-    /**
-     * @throws SyntaxError
-     * @throws RuntimeError
-     * @throws LoaderError|\Exception
-     */
-    public function createPost(Request $request ): Response
+
+    public function createPost(?int $postId): ?Post
     {
-        $errors = [];
-        $form = new FormBuilder('POST');
 
-        $form
-           ->add(
-                (new Input('title', ['id' => 'title', 'class' => 'form-control']))
-                    ->withLabel('Titre du Post')
-                    ->required()
-            )->add(
-                (new Textarea('head', ['id' => 'head', 'class' => 'form-control']))
-                    ->withLabel('Chapô du Post')
-                    ->required()
-            )->add(
-                (new Textarea('content', ['id' => 'content', 'class' => ' form-control']))
-                    ->withLabel('Contenu du Post'
-                    )->required()
-            );
+        $request = new Request();
+        $title = $request->post('title');
+        $head = $request->post('head');
+        $content = $request->post('content');
 
-        if ($form->handleRequest($request)->isSubmitted() && $form->isValid()){
-            $title = $request->post('title');
-            $head = $request->post('head');
-            $content = $request->post('content');
+        $post = (new Post())
+            ->setTitle($title)
+            ->setHead($head)
+            ->setContent($content);
+        $postId = $this->postRepository->createPost($post,
+            $this->userService->getUserFromSession()->getPseudo());
 
-            $post = (new Post())
-                ->setTitle($title)
-                ->setHead($head)
-                ->setContent($content);
-             $this->postRepository->createPost($post,
-                $this->userService->getUserFromSession()->getPseudo());
-        }
 
-        return $this->render('adminPost', [
-            "form" => $form,
-            'errors' => $errors
-        ]);
+        header('location: /articles/' . $postId);
+        exit();
     }
 
+    private function displayPostsPanel(): Response
+    {
+        // Get all posts, then build their $comments array
+        $posts = $this->postRepository->getAllPosts();
+        foreach ($posts as $p) {
+            $postComments = $this->commentRepository->getCommentsOfPostById($p->getId());
+            $p->setComments($postComments);
+        }
+
+        $data['posts'] = $posts;
+
+        return $this->render('admin', $data);
+    }
+
+    private function deletePost(int $postId): Response
+    {
+        $rslt = $this->postRepository->deletePost($postId);
+        if (!$rslt) {
+            throw new Exception('La suppression du Post a rencontré un problème.');
+        }
+
+        return $this->displayPostsPanel();
+    }
+
+    private function updatePost(Post $post): void
+    {
+        $rslt = $this->postRepository->updatePost($post);
+        if (!$rslt) {
+            throw new Exception('La mise à jour du Post a rencontré un problème.');
+        }
+
+        header('location: /articles/' . $post->getId());
+    }
+
+    private function displayPostEdit(?int $postId): Response
+    {
+        $data['title'] = $postId ? 'Éditer un Post' : 'Créer un Post';
+        $data['post'] = $postId ? $this->postRepository->getPostByID($postId) : null;
+
+        return $this->render('adminPost', $data);
+    }
+
+    private function buildPostInstance(?int $postId) : Post
+    {
+        $request = new Request();
+        return (new Post())
+            ->setId($postId)
+            ->setTitle($request->post('title'))
+            ->setHead($request->post('head'))
+            ->setContent($request->post('content'));
+    }
 }

@@ -10,7 +10,6 @@
  */
 
 use App\Controller\Admin\AdminController;
-use App\Controller\HomeController;
 
 ?>
 <div>
@@ -28,14 +27,16 @@ use App\Controller\HomeController;
         <tbody>
         <?php
         foreach ($data['users'] as $user) :?>
+        <form action="/admin/userstatus" method='post'>
             <tr class="table-success">
-                <th><?php echo $user->getPseudo(); ?></th>
+                <th><input type="hidden" name="userName" value="<?php echo $user->getPseudo(); ?>"/><?php echo $user->getPseudo(); ?></th>
                 <td> <?php echo $user->getFirstname(); ?></td>
                 <td> <?php echo $user->getLastname(); ?></td>
                 <td> <?php echo $user->getEmail(); ?></td>
-                <td> <?php echo $user->getStatus();?></td>
+                <td><input type="hidden" name="userStatus" value="{{statusValue}}"/> <?php echo $user->getStatus();?></td>
                 <td> <a href="" type="button" class="btn btn-outline-success">Bannir</a></td>
             </tr>
+        </form>
         <?php endforeach;?>
         </tbody>
     </table>

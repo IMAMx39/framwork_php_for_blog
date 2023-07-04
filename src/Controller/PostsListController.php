@@ -5,9 +5,6 @@ namespace App\Controller;
 use App\Repository\PostRepository;
 use Core\Controller;
 use Core\Response;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 
 class PostsListController extends Controller
 {

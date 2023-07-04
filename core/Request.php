@@ -50,4 +50,14 @@ class Request
         }
         return trim(htmlspecialchars($_POST[$key]));
     }
+
+    public  function GetOrNull($varname, $isNum = false) : ?string
+    {
+        try {
+            return $this->post($varname, $isNum);
+        }
+        catch(Exception $e) {
+            return null;
+        }
+    }
 }

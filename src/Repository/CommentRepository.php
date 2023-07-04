@@ -41,4 +41,14 @@ class CommentRepository extends Manager
         return $result && $query->rowCount() > 0;
     }
 
+    public function approveById(int $commentId) : bool
+    {
+        $req = $this->getCnxConfig()->prepare(
+            'UPDATE comment SET fk_comment_status = "approved" WHERE id = ?');
+
+        $rslt = $req->execute(array($commentId));
+
+        return $rslt && $req->rowCount() > 0;
+    }
+
 }
