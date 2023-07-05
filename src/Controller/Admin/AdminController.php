@@ -74,6 +74,11 @@ class AdminController extends Controller
             case 'articles':
                 $post = $this->buildPostInstance($postId);
                 return $postId == 0 ? $this->createPost($postId) : $this->updatePost($post);
+            case 'userstatus':
+                $name = $request->post('userPseudo');
+                $status =  $request->post('userStatus');
+                $this->setUserStatus($name, $status);
+                return $this->displayUsers();
 
             default:
                 throw new Exception('Action demandée invalide.');
@@ -110,7 +115,7 @@ class AdminController extends Controller
 
 
         header('location: /articles/' . $postId);
-
+        exit();
     }
 
     private function displayPostsPanel(): Response
@@ -165,5 +170,17 @@ class AdminController extends Controller
             ->setTitle($request->post('title'))
             ->setHead($request->post('head'))
             ->setContent($request->post('content'));
+    }
+
+    private function setUserStatus(string $name, string $status) : bool
+    {
+        if($status === "banned") {
+            return $this->userRepository->banUser($name);
+        }
+        else if($status === "visitor") {
+            return $this->userRepository->unbanUser($name);
+        }
+
+        throw new \Exception("Mauvais status d'utilisateur envoyé au controlleur.");
     }
 }

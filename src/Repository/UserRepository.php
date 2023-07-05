@@ -59,4 +59,21 @@ class UserRepository extends Manager
         return !$result ? null : $result;
     }
 
+    public function banUser(string $name) : bool
+    {
+        $req = $this->getCnxConfig()->prepare(
+            'UPDATE user SET fk_user_status = "banned" WHERE pseudo = ?'
+        );
+
+        return $req->execute([$name]);
+    }
+
+    public function unbanUser(string $name) : bool
+    {
+        $req = $this->getCnxConfig()->prepare(
+            'UPDATE user SET fk_user_status = "visitor" WHERE pseudo = ?'
+        );
+
+        return $req->execute([$name]);
+    }
 }
