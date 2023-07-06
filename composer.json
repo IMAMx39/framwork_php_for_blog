@@ -19,7 +19,8 @@
       "ext-apcu": "*",
       "ext-pdo": "*",
         "twig/intl-extra": "^3.6",
-        "symfony/mailer": "^6.3"
+        "symfony/mailer": "^6.3",
+        "ext-intl": "*"
     },
     "require-dev": {
         "symfony/var-dumper": "^6.3"

@@ -19,8 +19,7 @@ class LogoutController extends Controller
     public function logout(): Response
     {
         Session::Destroy();
-         header('location: /');
-         exit();
+        return $this->redirectTo('/');
     }
 
 

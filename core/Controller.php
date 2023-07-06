@@ -12,6 +12,7 @@ abstract class Controller
     public function __construct()
     {
         $this->userService = new UserService();
+        //$this->render = $render;
     }
 
     protected function render(string $view, array $data): Response
@@ -26,8 +27,14 @@ abstract class Controller
     {
         ob_start();
         $user =(new UserService())->getUserFromSession();
-        include_once(dirname(__DIR__) . "/templates/layouts/base.php");
+        include_once(Parameter::get('template_base'));
         return ob_get_clean();
+    }
+
+    public function redirectTo(string $uri) :string
+    {
+        header("Location: $uri");
+        exit();
     }
 
 

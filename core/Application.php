@@ -10,8 +10,11 @@ class Application
 
     public function __construct()
     {
-        error_reporting(E_ALL);
-        ini_set('display_errors', 1);
+        Parameter::init(dirname(__DIR__).'/config/parameter.php');
+        if (Parameter::get('app_env') === 'dev') {
+            error_reporting(E_ALL);
+            ini_set('display_errors', 1);
+        }
 
         $this->router = new Router();
     }

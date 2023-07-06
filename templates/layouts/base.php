@@ -9,7 +9,7 @@ use App\Model\User;
 ?>
 
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,7 +36,7 @@ use App\Model\User;
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto ">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="/postList">Les posts</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="/articles">Les posts</a></li>
                 <li class="nav-item"><a class="nav-link active" href="/contact">Contact</a></li>
 
             </ul>

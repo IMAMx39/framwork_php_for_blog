@@ -2,8 +2,7 @@
 
 namespace Core;
 
-use Exception;
-use RuntimeException;
+use InvalidArgumentException;
 
 class Request
 {
@@ -39,24 +38,19 @@ class Request
         return $_POST;
     }
 
-    public function post(string $key, $isNum = false) : string
+    public function post(string $key): string
     {
-        if (!array_key_exists($key, $_POST) ) {
-            throw new \InvalidArgumentException($key. ' not exist');
+        if (!array_key_exists($key, $this->request())) {
+            throw new InvalidArgumentException($key . ' not exist');
         }
-        if ($isNum && !is_numeric($_POST[$key])) {
-
-            throw new RuntimeException('Un problème est survenu avec les données envoyées.');
-        }
-        return trim(htmlspecialchars($_POST[$key]));
+        return trim(htmlspecialchars($this->request()[$key]));
     }
 
-    public  function GetOrNull($varname, $isNum = false) : ?string
+    public function getOrNull(string $key): ?string
     {
         try {
-            return $this->post($varname, $isNum);
-        }
-        catch(Exception $e) {
+            return $this->post($key);
+        } catch (InvalidArgumentException $e) {
             return null;
         }
     }

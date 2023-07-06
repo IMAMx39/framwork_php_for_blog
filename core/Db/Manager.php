@@ -1,26 +1,26 @@
 <?php
 
 namespace Core\Db;
-use Core\Db\Config\ConfigDb;
+
+use Core\Parameter;
 use PDO;
 
-class Manager
+abstract class Manager
 {
-    private static PDO $cnx;
+    private static PDO $pdo;
 
-    protected static function getCnxConfig() : PDO
+    protected static function getCnxConfig() : ?PDO
     {
-        if (!isset(self::$cnx))
+        if (!isset(self::$pdo))
         {
-            $host = ConfigDb::get('db_host');
-            $name = ConfigDb::get('db_name');
-            $user = ConfigDb::get('db_user');
-            $password = ConfigDb::get('db_password');
+            $host = Parameter::get('db_host');
+            $name = Parameter::get('db_name');
+            $user = Parameter::get('db_user');
+            $password = Parameter::get('db_password');
 
-            self::$cnx = new PDO('mysql:host='.$host.';dbname='.$name.';charset=utf8', $user, $password);
+            self::$pdo = new PDO('mysql:host='.$host.';dbname='.$name.';charset=utf8', $user, $password);
         }
 
-        return self::$cnx;
+        return self::$pdo;
     }
-
 }

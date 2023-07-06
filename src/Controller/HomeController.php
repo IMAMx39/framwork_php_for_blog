@@ -8,7 +8,6 @@ use Core\Form\Field\Email;
 use Core\Form\Field\Input;
 use Core\Form\Field\Textarea;
 use Core\Form\FormBuilder;
-use Core\Form\Submit;
 use Core\Request;
 use Core\Response;
 use Twig\Error\LoaderError;
@@ -30,35 +29,33 @@ class HomeController extends Controller
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function contact(Request $request ): Response
+    public function contact(Request $request): Response
     {
 
-
         $user = $this->userService->getUserFromSession();
+        $form = (new FormBuilder())
+            ->add(
+                (new Input('username', ['id' => 'username', 'class' => 'form-control']))
+                    ->withLabel('Nom et Prénom')
+            )
+            ->add(
+                (new Email('email', ['id' => 'email', 'class' => 'form-control']))
+                    ->withLabel('Email')
+            )
+            ->add(
+                (new Textarea('subject', ['id' => 'subject', 'class' => 'form-control']))
+                    ->withLabel('Votre message')
+            );
 
-        $formContact = new FormBuilder();
-
-        $formContact->add((new Input('username',['id' => 'username', 'class' => 'form-control']))
-            ->withLabel('Nom et Prénom'))
-                    ->add((new Email('email',  ['id' => 'email', 'class' => 'form-control']))
-                        ->withLabel('Email'))
-                    ->add((new Textarea('subject', ['id' => 'subject', 'class' => 'form-control']))
-                        ->withLabel('Votre message'));
-
-        if ($formContact->handleRequest($request)->isSubmitted() && $formContact->isValid()) {
-
+        if ($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
             $username = $request->post('username');
             $email = $request->post('email');
             $subject = $request->post('subject');
-
-
         }
 
-        $data = [
-            "form" => $formContact,
-            "user" => $user?->getPseudo()
-        ];
-
-        return $this->render('home', $data);
+        return $this->render('home', [
+            "form" => $form,
+            "user" => $user
+        ]);
     }
 }

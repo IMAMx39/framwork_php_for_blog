@@ -6,11 +6,9 @@ final class Render
 {
     public static function render(string $view, array $data): string
     {
-        foreach ($data as $key => $value) {
-            $$key = $value;
-        }
+        extract(array_merge($data, []));
         ob_start();
-        include_once(dirname(__DIR__) . "/templates/$view.php");
+        include_once(Parameter::get('template_path').$view).'.php';
         return ob_get_clean();
     }
 }

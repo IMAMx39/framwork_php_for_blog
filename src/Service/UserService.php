@@ -22,10 +22,11 @@ final class UserService
 
     public function getUserFromSession(): ?User
     {
-        if ($this->session->get('user') == ''){
+        $user = $this->session->get('user');
+        if (!$user instanceof User){
             return null;
         }
-        return $this->session->get('user');
+        return $user;
     }
 
     public function register(User $user, string $plainPassword): void
@@ -44,13 +45,5 @@ final class UserService
     public function login(User $user): void
     {
         $this->session->set('user', $user);
-    }
-    public static function IsUserAdmin() : bool
-    {
-        return isset($_SESSION['admin']) && $_SESSION['admin'] == true;
-    }
-    public static function isAdmin()
-    {
-
     }
 }

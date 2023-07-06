@@ -17,7 +17,7 @@ use Core\Form\FormBuilder;
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="site-heading col-md-10 col-lg-8 col-xl-7">
                         <h1>
-                           <?php echo 'Welcome to my blog '.$user ?>
+                           <?php echo 'Welcome to my blog '.$user?->getPseudo() ?>
                         </h1>
                     </div>
                 </div>

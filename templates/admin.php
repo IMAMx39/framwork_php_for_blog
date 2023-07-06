@@ -34,12 +34,6 @@ use App\Model\Comment;
                 <div class="post-meta">
                     Par <a href="#0"><?php echo $post->getAuthor(); ?></a> le  <?php echo $post->getCreatedAt(); ?>
                 </div>
-
-
-
-
-                <?php  ?>
-                <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-bs-original-title="Popover Title" aria-describedby="popover958938">Left</button>
                 <?php
 
                 $comments = $post->getComments();

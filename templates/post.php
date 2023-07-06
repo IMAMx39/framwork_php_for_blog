@@ -15,6 +15,12 @@ use Core\Form\FormBuilder;
 
 ?>
 
+<?php
+$timePost =  $post->getCreatedAt();
+$date = DateTime::createFromFormat('Y-m-d H:i:s', $timePost);//assuming you are using 24 hour format for time
+$createTime = $date->format('d/m/Y H:i:s');
+?>
+
 <h1>Le post</h1>
 <!-- Post Content -->
 <article class="mb-4 container px-4 px-lg-5">
@@ -28,7 +34,7 @@ use Core\Form\FormBuilder;
                     <p class="card-text"><?php echo $post->getContent(); ?></p>
                 </div>
                 <div class="card-footer text-muted">
-                    Par <a href="#!"><?php echo $post->getAuthor(); ?></a> Le <?php echo $post->getCreatedAt() ?>
+                    Par <a href="#!"><?php echo $post->getAuthor(); ?></a> Le <?php echo $createTime ?>
                     <?php if ($post->getUpdatedAt() !== null) { ?>
                         <small>Modifié le </small><span><?php echo $post->getUpdatedAt() ?></span>
                     <?php } ?>
@@ -54,11 +60,11 @@ use Core\Form\FormBuilder;
                                     avant d'apparaître.</em></small>
                         </div>
                     </div>
-                    <input type="hidden" name="postId" value="<?php echo $data['postId'] ?>">
+                    <input type="hidden" name="postId" value="<?php echo $data['postId'] ?>" >
                     <br/>
                     <div class="row justify-content-center">
                         <input type="submit" id="submitButton"
-                               class="col-md-3 col-sm-6 btn btn-primary text-uppercase rounded" value='Envoyer'>
+                               class="col-md-3 col-sm-6 btn btn-primary text-uppercase rounded" value='Envoyer'  onclick=" alert('Votre Commantaire a été bien transmis');">
                     </div>
                 </form>
 

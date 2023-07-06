@@ -14,7 +14,6 @@ use Exception;
 
 class AdminController extends Controller
 {
-
     private UserRepository $userRepository;
     private UserService $userService;
     private PostRepository $postRepository;
@@ -36,12 +35,12 @@ class AdminController extends Controller
     public function index(Request $request, ?array $action): Response
     {
         $user = $this->userService->getUserFromSession();
-        if(!$user && !$user->getStatus() == 'admin') {
-            throw new \Exception('HTTP/1.0 403 Forbidden');
-        }
-
+        //if (!$user && !$user->getStatus() == 'admin') {
+        //    throw new Exception('HTTP/1.0 403 Forbidden');
+        //}
         if ($user->getStatus() !== 'admin') {
-            header('location: /home');
+
+           $this->redirectTo('/');
         }
 
         if (empty($action)) {
@@ -59,7 +58,7 @@ class AdminController extends Controller
     {
         $request = new Request();
         // optionnal postId used for 'delete', 'edit' & 'post' action cases
-        $postId = $request->GetOrNull('postId', true);
+        $postId = $request->getOrNull('postId', true);
 
         switch ($action) {
             case 'delete':
@@ -76,7 +75,7 @@ class AdminController extends Controller
                 return $postId == 0 ? $this->createPost($postId) : $this->updatePost($post);
             case 'userstatus':
                 $name = $request->post('userPseudo');
-                $status =  $request->post('userStatus');
+                $status = $request->post('userStatus');
                 $this->setUserStatus($name, $status);
                 return $this->displayUsers();
 
@@ -114,8 +113,8 @@ class AdminController extends Controller
             $this->userService->getUserFromSession()->getPseudo());
 
 
-        header('location: /articles/' . $postId);
-        exit();
+       return $this->redirectTo('/articles/'.$postId);
+
     }
 
     private function displayPostsPanel(): Response
@@ -151,7 +150,7 @@ class AdminController extends Controller
             throw new Exception('La mise à jour du Post a rencontré un problème.');
         }
 
-        header('location: /articles/' . $post->getId());
+        $this->redirectTo('/articles/' .$post->getId());
     }
 
     private function displayPostEdit(?int $postId): Response
@@ -162,7 +161,7 @@ class AdminController extends Controller
         return $this->render('adminPost', $data);
     }
 
-    private function buildPostInstance(?int $postId) : Post
+    private function buildPostInstance(?int $postId): Post
     {
         $request = new Request();
         return (new Post())
@@ -172,15 +171,14 @@ class AdminController extends Controller
             ->setContent($request->post('content'));
     }
 
-    private function setUserStatus(string $name, string $status) : bool
+    private function setUserStatus(string $name, string $status): bool
     {
-        if($status === "banned") {
+        if ($status === "banned") {
             return $this->userRepository->banUser($name);
-        }
-        else if($status === "visitor") {
+        } else if ($status === "visitor") {
             return $this->userRepository->unbanUser($name);
         }
 
-        throw new \Exception("Mauvais status d'utilisateur envoyé au controlleur.");
+        throw new Exception("Mauvais status d'utilisateur envoyé au controlleur.");
     }
 }

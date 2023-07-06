@@ -63,9 +63,7 @@ class AuthController extends Controller
 
             $this->userRepository->register($user, $hashPsw);
 
-            header('location: /');
-            exit();
-
+           $this->redirectTo('/');
         }
 
 

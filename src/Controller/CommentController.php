@@ -45,8 +45,8 @@ class CommentController extends Controller
 
 
         }
-        header('location: /articles/' . $postId);
-        exit();
+       return $this->redirectTo('/articles/' . $postId);
+
     }
 
     private function add(string $comment, int $postId): void

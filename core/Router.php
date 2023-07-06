@@ -28,25 +28,25 @@ class Router
     public function resolve(Request $request): array
     {
         $matches = [];
-        $regex = '';
-        $path = $request->getUri() ;
+        $uri = $request->getUri() ;
         $method = $request->method();
 
         foreach ($this->routes[$method] as $key => $value) {
-            if (preg_match($key,$path,$matches) != 1){
+            if (preg_match($key,$uri,$matches) != 1){
                 continue;
             }
 
-            $regex = $key;
+            $path = $key;
 
             if (count($matches) > 1){
                 \array_shift($matches);
                 $this->params = $matches;
             }
-            break;
+            return [$this->routes[$method][$path] ?? null,$this->params] ;
+
         }
 
-        return [$this->routes[$method][$regex] ?? null,$this->params] ;
+        return [null, null];
 
     }
 }

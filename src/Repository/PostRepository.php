@@ -14,14 +14,14 @@ class PostRepository extends Manager
             'INSERT INTO post(title,head,content, createdAt, fk_user_pseudo) VALUES (?, ?, ?, now(), ?);'
         );
 
-        return $query->execute([
+        $result = $query->execute([
             $post->getTitle(),
             $post->getHead(),
             $post->getContent(),
             $username
         ]);
 
-//        return $result ? $this->getCnx()->lastInsertId() : null;
+        return $result ? $this->getCnxConfig()->lastInsertId() : null;
 
     }
 
