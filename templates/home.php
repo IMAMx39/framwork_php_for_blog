@@ -11,12 +11,12 @@ use Core\Form\FormBuilder;
 ?>
 
 <div class="mb-4">
-    <header class="container  px-4 px-lg-5" style="background-color: aquamarine)">
+    <header class="container  px-4 px-lg-5" >
         <div class="container position-relative px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
-                    <div class="site-heading col-md-10 col-lg-8 col-xl-7">
-                        <h1>
+                    <div class="site-heading col-md-10 col-lg-8 col-xl-7" style="    display: inline;">
+                        <h1 style="margin-bottom: 1.5rem">
                            <?php echo 'Welcome to my blog '.$user?->getPseudo() ?>
                         </h1>
                     </div>
@@ -39,7 +39,7 @@ use Core\Form\FormBuilder;
 
                 <hr class="my-4" />
                 <h3 class="text-center" style="text-decoration: underline;">
-                    <a class="btn btn-primary" role="button" href="assets/downloads/CV_John_Doe.pdf" download="CV-GGO.pdf">Téléchargez mon CV !</a>
+                    <a class="btn btn-primary" role="button" href="assets/downloads/" download="IMAMOSx95.pdf">Téléchargez mon CV !</a>
                 </h3>
 
                 <hr class="my-4" />
