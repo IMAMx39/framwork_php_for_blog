@@ -32,7 +32,7 @@ use App\Model\Comment;
                     <h2 class="post-title" style="margin-top:0;"><?php echo $post->getTitle()?></h2>
                 </div>
                 <div class="post-meta">
-                    Par <a href="#0"><?php echo $post->getAuthor(); ?></a> le  <?php echo $post->getCreatedAt(); ?>
+                    Par <a href="#0"><?php echo $post->getAuthor(); ?></a> le  <?php echo $post->getCreatedAt()->format('d/m/Y H:i'); ?>
                 </div>
                 <?php
 

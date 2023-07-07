@@ -9,8 +9,8 @@ class Post
     private string $title;
     private string $head;
     private string $content;
-    private  $createdAt;
-    private $updatedAt;
+    private mixed $createdAt;
+    private mixed $updatedAt;
     private string $author;
 
     private array $comments = [];
@@ -91,10 +91,11 @@ class Post
 
     /**
      * @return mixed
+     * @throws \Exception
      */
-    public function getCreatedAt()
+    public function getCreatedAt() : \DateTime
     {
-        return $this->createdAt;
+        return new \DateTime($this->createdAt);
     }
 
     /**
@@ -109,6 +110,7 @@ class Post
 
     /**
      * @return mixed
+     * @throws \Exception
      */
     public function getUpdatedAt()
     {

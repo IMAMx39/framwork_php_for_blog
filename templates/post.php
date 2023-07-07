@@ -15,11 +15,6 @@ use Core\Form\FormBuilder;
 
 ?>
 
-<?php
-$timePost =  $post->getCreatedAt();
-$date = DateTime::createFromFormat('Y-m-d H:i:s', $timePost);//assuming you are using 24 hour format for time
-$createTime = $date->format('d/m/Y H:i:s');
-?>
 
 <h1>Le post</h1>
 <!-- Post Content -->
@@ -28,15 +23,15 @@ $createTime = $date->format('d/m/Y H:i:s');
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="card border-primary bg-light  mb-auto justify-content-between"
                  style="max-width: 80rem; margin-top: 3rem">
-                <div class="card-header"><?php echo $post->getTitle(); ?></div>
+                <div class="card-header"><?= $post->getTitle(); ?></div>
                 <div class="card-body">
-                    <h4 class="card-title"><?php echo $post->getHead(); ?></h4>
-                    <p class="card-text"><?php echo $post->getContent(); ?></p>
+                    <h4 class="card-title"><?= $post->getHead(); ?></h4>
+                    <p class="card-text"><?= $post->getContent(); ?></p>
                 </div>
                 <div class="card-footer text-muted">
-                    Par <a href="#!"><?php echo $post->getAuthor(); ?></a> Le <?php echo $createTime ?>
+                    Par <a href="#!"><?= $post->getAuthor(); ?></a> Le <?= $post->getCreatedAt()->format('d/m/Y H:i') ?>
                     <?php if ($post->getUpdatedAt() !== null) { ?>
-                        <small>Modifié le </small><span><?php echo $post->getUpdatedAt() ?></span>
+                        <small>Modifié le </small><span><?= $post->getUpdatedAt() ?></span>
                     <?php } ?>
                 </div>
             </div>
