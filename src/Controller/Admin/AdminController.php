@@ -57,7 +57,6 @@ class AdminController extends Controller
     private function handleAction(string $action): Response
     {
         $request = new Request();
-        // optionnal postId used for 'delete', 'edit' & 'post' action cases
         $postId = $request->getOrNull('postId', true);
 
         switch ($action) {
@@ -93,7 +92,7 @@ class AdminController extends Controller
             'users' => $users,
         ];
 
-        return $this->render('adminUsers', $data);
+        return $this->render('admin/adminUsers', $data);
     }
 
 
@@ -130,7 +129,7 @@ class AdminController extends Controller
         $data['comments'] = $postComments;
 
 
-        return $this->render('admin', $data);
+        return $this->render('admin/admin', $data);
     }
 
     private function deletePost(int $postId): Response
@@ -158,7 +157,7 @@ class AdminController extends Controller
         $data['title'] = $postId ? 'Éditer un Post' : 'Créer un Post';
         $data['post'] = $postId ? $this->postRepository->getPostByID($postId) : null;
 
-        return $this->render('adminPost', $data);
+        return $this->render('admin/adminPost', $data);
     }
 
     private function buildPostInstance(?int $postId): Post

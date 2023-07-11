@@ -10,13 +10,19 @@ use App\Controller\LoginController;
 use App\Controller\LogoutController;
 use App\Controller\PostController;
 use App\Controller\PostsListController;
+use App\Repository\UserRepository;
 use App\Service\UserService;
 use Core\Application;
 use Core\Request;
+use Whoops\Handler\PrettyPageHandler;
+use Whoops\Run;
 
 require '../vendor/autoload.php';
 
 $app = new Application();
+$whoops = new Run;
+$whoops->pushHandler(new PrettyPageHandler);
+$whoops->register();
 
 $app->getRouter()->get('/^\/$/', static function (Request $request) {
     return (new HomeController())->contact($request);
@@ -53,6 +59,10 @@ $app->getRouter()->any('/^\/admin$/', static function (Request $request,array $a
 
 $app->getRouter()->any('/^\/admin\/([a-z]+)$/', static function (Request $request,array  $action) {
     return (new AdminController())->index($request,$action);
+});
+
+$app->getRouter()->any('/^\/admin\/users$/', static function (Request $request,array  $action) {
+    return (new AdminController())->displayUsers($request,$action);
 });
 
 

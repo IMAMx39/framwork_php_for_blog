@@ -44,20 +44,30 @@ class LoginController extends Controller
             $email = $request->post('email');
             $password = $request->post('password');
 
-//            $this->loginUser($email, $password);
             $user = $this->userRepository->getUser($email);
+            if ($user->getStatus()==='banned'){
+
+                return $this->showError("Ce compte a été banni par un administrateur.");
+            }
+
             if ($user instanceof User && UserService::verifyPassword($password, $user->getPassword())) {
                 $this->userService->login($user);
                 header('location: /home');
                 exit();
             }
-            $errors = ['User not found or wrrong password'];
+            return $this->showError("Mauvais identifiant ou mot de passe.");
         }
 
         return $this->render('login', [
             "form" => $form,
             "errors" => $errors,
         ]);
+    }
+
+    private function showError(string $errors): Response
+    {
+        $data['errors'] = $errors;
+        return $this->render('error', $data);
     }
 
 }

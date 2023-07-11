@@ -21,7 +21,7 @@ use App\Controller\Admin\AdminController;
             <th scope="col">Prénom</th>
             <th scope="col">Nom</th>
             <th scope="col">Email</th>
-            <th scope="col">Status</th>
+            <th scope="col">action</th>
         </tr>
         </thead>
         <tbody>
@@ -39,7 +39,7 @@ use App\Controller\Admin\AdminController;
                 <td> <?php echo $user->getFirstname(); ?></td>
                 <td> <?php echo $user->getLastname(); ?></td>
                 <td> <?php echo $user->getEmail(); ?></td>
-                <td><input type="hidden" name="userStatus" value="<?php echo $statusValue?>"/> <?php echo $statusValue;?></td>
+               <input type="hidden" name="userStatus" value="<?php echo $statusValue?>"/> <?php echo $statusValue;?>
                 <td><input type="submit" class="btn <?php echo $btnClass?>" value="<?php echo $btnText ?>"
                     onclick="return  confirm('Êtes-vous sûr de vouloir [<?php echo $btnText ?>] <?php echo $user->getPseudo(); ?> ?'); "/></td>
             </tr>
