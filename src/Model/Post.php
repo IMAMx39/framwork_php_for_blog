@@ -5,7 +5,7 @@ namespace App\Model;
 class Post
 {
 
-    private $id;
+    private int $id;
     private string $title;
     private string $head;
     private string $content;
@@ -18,7 +18,7 @@ class Post
     /**
      * @return mixed
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
@@ -26,7 +26,7 @@ class Post
     /**
      * @param mixed $id
      */
-    public function setId($id): self
+    public function setId(int $id): self
     {
         $this->id = $id;
         return $this;
@@ -101,7 +101,7 @@ class Post
     /**
      * @param mixed $createdAt
      */
-    public function setCreatedAt($createdAt): self
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
         return $this;

@@ -72,7 +72,7 @@ class CommentController extends Controller
             throw new RuntimeException();
         }
 
-        $rslt = $this->commentRepository->approveById($commentId);
+        $rslt = $this->commentRepository->approve($commentId);
 
         if ($rslt === false) {
             throw new RuntimeException('Un problème est survenu.');
@@ -87,7 +87,7 @@ class CommentController extends Controller
             throw new RuntimeException();
         }
 
-        $rslt = $this->commentRepository->deleteById($commentId);
+        $rslt = $this->commentRepository->delete($commentId);
 
         if (!$rslt) {
             throw new RuntimeException('Un problème est survenu.');

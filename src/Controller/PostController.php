@@ -29,7 +29,7 @@ class PostController extends Controller
     {
         $user = $this->userService->getUserFromSession();
         $post = $this->postRepository->getPostByID($args[0]);
-        $comments = $this->commentRepository->getCommentsOfPostById($args[0]);
+        $comments = $this->commentRepository->find($args[0]);
         if (!$post) {
             throw new RuntimeException("Ce post n'existe pas.");
         }

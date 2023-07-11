@@ -11,6 +11,7 @@ class PostRepository extends Manager
     public function createPost(Post $post,string $username) : ?int
     {
         $query = $this->getCnxConfig()->prepare(
+            //(new Insert('post', ['title' => '?', 'head'=>'?', 'content'=>'?', 'createdAt'=> new \DateTime()->formatd(), 'fk_user_pseudo'=>'?']))
             'INSERT INTO post(title,head,content, createdAt, fk_user_pseudo) VALUES (?, ?, ?, now(), ?);'
         );
 

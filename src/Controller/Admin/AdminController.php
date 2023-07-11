@@ -121,7 +121,7 @@ class AdminController extends Controller
         // Get all posts, then build their $comments array
         $posts = $this->postRepository->getAllPosts();
         foreach ($posts as $p) {
-            $postComments = $this->commentRepository->getCommentsOfPostById($p->getId());
+            $postComments = $this->commentRepository->find($p->getId());
             $p->setComments($postComments);
         }
 

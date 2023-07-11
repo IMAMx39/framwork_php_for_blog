@@ -18,7 +18,7 @@ class CommentRepository extends Manager
                 ORDER BY createdAt DESC');
 
         $req->setFetchMode(\PDO::FETCH_CLASS, Comment::class);
-        $req->execute(array($postId));
+        $req->execute([$postId]);
 
         return $req->fetchAll();
     }
