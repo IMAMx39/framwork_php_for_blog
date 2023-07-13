@@ -8,10 +8,6 @@ use Core\Db\Manager;
 class CommentRepository extends Manager
 {
 
-    /**
-     * @param int $postId
-     * @return array<Comment>
-     */
     public function find(int $postId) : array
     {
         $req = $this->getCnxConfig()->prepare(
@@ -19,7 +15,7 @@ class CommentRepository extends Manager
                         u.pseudo author
                 FROM comment c, user u
                 WHERE c.fk_user_pseudo = u.pseudo AND c.fk_post_id = ?
-                ORDER BY c.createdAt DESC');
+                ORDER BY createdAt DESC');
 
         $req->setFetchMode(\PDO::FETCH_CLASS, Comment::class);
         $req->execute([$postId]);
@@ -37,20 +33,20 @@ class CommentRepository extends Manager
         return $req->execute([$postId, $username, $status, $comment]);
     }
 
-    public function delete(Comment $comment): bool
+    public function delete(int $id): bool
     {
-        $query = $this->getCnxConfig()->prepare('DELETE FROM comment WHERE id =?');
-        $result = $query->execute([$comment->getId()]);
+        $query = $this->getCnxConfig()->prepare('delete from comment where id =?');
+        $result = $query->execute([$id]);
 
         return $result && $query->rowCount() > 0;
     }
 
-    public function approve(Comment $comment) : bool
+    public function approve(int $commentId) : bool
     {
         $req = $this->getCnxConfig()->prepare(
             'UPDATE comment SET fk_comment_status = "approved" WHERE id = ?');
 
-        $rslt = $req->execute(array($comment->getId()));
+        $rslt = $req->execute(array($commentId));
 
         return $rslt && $req->rowCount() > 0;
     }

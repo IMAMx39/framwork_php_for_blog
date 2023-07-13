@@ -46,7 +46,7 @@ use App\Model\User;
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
                        aria-haspopup="true" aria-expanded="true">
-                        <?php echo $user?->getPseudo() ?>
+                        <?= 'Bonjour '. $user?->getPseudo() ?>
                     </a>
                     <div class="dropdown-menu">
                         <?php if ($user?->getStatus() == 'admin') {
