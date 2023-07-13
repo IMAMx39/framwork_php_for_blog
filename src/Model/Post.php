@@ -149,12 +149,10 @@ class Post
         return $this->comments;
     }
 
-    public function setComments(array $com) :self
+    public function setComments(array $comments) :self
     {
-        $this->comments = $com;
+        $this->comments = $comments;
 
         return $this;
     }
-
-
 }

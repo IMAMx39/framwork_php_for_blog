@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Model\Post;
 use Core\Db\Manager;
+use Core\QueryBuilder\Insert;
 
 class PostRepository extends Manager
 {

@@ -39,7 +39,7 @@ final class UserService
 
     public static function hashPassword(string $plainPassword): string
     {
-        return password_hash($plainPassword, PASSWORD_BCRYPT, ['cost' => 12,]);
+        return password_hash($plainPassword, PASSWORD_BCRYPT, ['cost' => 12]);
     }
 
     public function login(User $user): void

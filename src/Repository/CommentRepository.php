@@ -8,14 +8,18 @@ use Core\Db\Manager;
 class CommentRepository extends Manager
 {
 
-    public function getCommentsOfPostById(int $postId) : array
+    /**
+     * @param int $postId
+     * @return array<Comment>
+     */
+    public function find(int $postId) : array
     {
         $req = $this->getCnxConfig()->prepare(
             'SELECT c.id, c.content, c.createdAt , c.fk_comment_status status,
                         u.pseudo author
                 FROM comment c, user u
                 WHERE c.fk_user_pseudo = u.pseudo AND c.fk_post_id = ?
-                ORDER BY createdAt DESC');
+                ORDER BY c.createdAt DESC');
 
         $req->setFetchMode(\PDO::FETCH_CLASS, Comment::class);
         $req->execute([$postId]);
@@ -33,20 +37,20 @@ class CommentRepository extends Manager
         return $req->execute([$postId, $username, $status, $comment]);
     }
 
-    public function deleteById(int $id): bool
+    public function delete(Comment $comment): bool
     {
-        $query = $this->getCnxConfig()->prepare('delete from comment where id =?');
-        $result = $query->execute([$id]);
+        $query = $this->getCnxConfig()->prepare('DELETE FROM comment WHERE id =?');
+        $result = $query->execute([$comment->getId()]);
 
         return $result && $query->rowCount() > 0;
     }
 
-    public function approveById(int $commentId) : bool
+    public function approve(Comment $comment) : bool
     {
         $req = $this->getCnxConfig()->prepare(
             'UPDATE comment SET fk_comment_status = "approved" WHERE id = ?');
 
-        $rslt = $req->execute(array($commentId));
+        $rslt = $req->execute(array($comment->getId()));
 
         return $rslt && $req->rowCount() > 0;
     }

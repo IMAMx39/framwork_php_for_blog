@@ -4,8 +4,6 @@ namespace Core\Form;
 
 class Submit extends Field
 {
-
-
     protected function template(): string
     {
         $attributes = [];
@@ -15,7 +13,8 @@ class Submit extends Field
 
         return sprintf(
             '<button type="submit" %s>%s</button>',
-            $this->label,
-            implode(' ', $attributes));
+            implode(' ', $attributes),
+            $this->label
+        );
     }
 }
