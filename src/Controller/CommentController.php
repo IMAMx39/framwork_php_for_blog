@@ -56,7 +56,7 @@ class CommentController extends Controller
         $username = $user?->getPseudo();
         $isAdmin = $user?->getStatus() === 'admin';
 
-        $rslt = $this->commentRepository->addOnPostID($postId, $comment, $username, $isAdmin);
+        $rslt = $this->commentRepository->add($postId, $comment, $username, $isAdmin);
 
         if (!$rslt) {
             throw new RuntimeException('Un problème est survenu..');

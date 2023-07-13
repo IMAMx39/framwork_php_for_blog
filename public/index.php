@@ -20,9 +20,6 @@ use Whoops\Run;
 require '../vendor/autoload.php';
 
 $app = new Application();
-$whoops = new Run;
-$whoops->pushHandler(new PrettyPageHandler);
-$whoops->register();
 
 $app->getRouter()->get('/^\/$/', static function (Request $request) {
     return (new HomeController())->contact($request);

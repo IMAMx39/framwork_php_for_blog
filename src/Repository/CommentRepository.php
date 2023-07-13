@@ -23,7 +23,7 @@ class CommentRepository extends Manager
         return $req->fetchAll();
     }
 
-    public function addOnPostID(int $postId, string $comment, string $username, bool $isAdmin) : bool
+    public function add(int $postId, string $comment, string $username, bool $isAdmin) : bool
     {
         $status = $isAdmin ? 'approved' : 'not_approved';
         $req = $this->getCnxConfig()->prepare(

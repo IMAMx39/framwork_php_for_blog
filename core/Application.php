@@ -3,6 +3,8 @@
 namespace Core;
 
 use LogicException;
+use Whoops\Handler\PrettyPageHandler;
+use Whoops\Run;
 
 class Application
 {
@@ -12,8 +14,11 @@ class Application
     {
         Parameter::init(dirname(__DIR__).'/config/parameter.php');
         if (Parameter::get('app_env') === 'dev') {
-            error_reporting(E_ALL);
-            ini_set('display_errors', 1);
+            $whoops = new Run;
+            $whoops->pushHandler(new PrettyPageHandler);
+            $whoops->register();
+            //error_reporting(E_ALL);
+            //ini_set('display_errors', 1);
         }
 
         $this->router = new Router();
