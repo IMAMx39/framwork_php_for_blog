@@ -23,6 +23,14 @@ abstract class Controller
 
     }
 
+    protected function renderHTML(string $view, array $data): string
+    {
+        $layout = $this->layoutContent();
+        $view = Render::render($view, $data);
+        return (str_replace('{{ content }}', $view,$layout));
+
+    }
+
     private function layoutContent(): string
     {
         ob_start();
@@ -30,6 +38,7 @@ abstract class Controller
         include_once(Parameter::get('template_base'));
         return ob_get_clean();
     }
+
 
     public function redirectTo(string $uri) :string
     {

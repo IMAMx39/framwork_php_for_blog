@@ -21,16 +21,10 @@ use Symfony\Component\Mime\Email;
 class ContactController extends Controller
 {
 
-    /**
-     * @throws SyntaxError
-     * @throws RuntimeError
-     * @throws LoaderError
-     * @throws TransportExceptionInterface
-     */
     public function contact(Request $request): Response
     {
 
-        $formContact = new FormBuilder('POST', 'do-contact');
+        $formContact = new FormBuilder('POST');
 
         $formContact
             ->add(
@@ -51,8 +45,10 @@ class ContactController extends Controller
             $subject = $request->post('subject');
 
             $this->sendMailContact($username, $email, $subject);
-            header('location: /home');
-            exit();
+
+            return $this->render('contact',[
+                "form" => $formContact
+            ]);
         }
 
         return $this->render('contact', [
@@ -61,9 +57,7 @@ class ContactController extends Controller
     }
 
     /**
-     * @throws RuntimeError
-     * @throws SyntaxError
-     * @throws LoaderError|TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     private function sendMailContact(string $username , string $email , string $subject): void
     {
@@ -77,12 +71,34 @@ class ContactController extends Controller
 
         $mail = (new Email())
             ->from($email)
-            ->to('ggo@p5phpblog.net')
+            ->to('imaassou@gmail.com')
             ->subject('[Amazing Blog - Contact] : '.$username)
             ->text('Vous avez reçu un email de la part de : '.$username.' ('.$email.') -> '.$subject)
-            ->html($this->render('contact', $data));
+            ->html($this->renderHTML('mail_contact',$data));
+ //           ->html(<<<HTML
+ //<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;margin-top: 30px;" width="100%">
+ //               <tr>
+ //                   <td style="padding-left:15px;padding-right:15px;width:100%;padding-bottom:5px;" align="center">
+ //                       <div style="line-height:10px">
+ //                           <a href="" style="outline:none" target="_blank">
+ //                               <img class="photo" alt="Blog Logo" src="/assets/img/otter.png" title="OtterBlog" width="123px"/>
+ //                           </a>
+ //                       </div>
+ //                   </td>
+ //               </tr>
+ //           </table>
+ //HTML);
 
         $mailer->send($mail);
+    }
+
+    private function displaySuccess(string $username) : Response
+    {
+        $data = [
+            'name' => $username,
+        ];
+
+        return $this->render('contact', $data);
     }
 
 }

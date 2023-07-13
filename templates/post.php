@@ -59,7 +59,8 @@ use Core\Form\FormBuilder;
                     <br/>
                     <div class="row justify-content-center">
                         <input type="submit" id="submitButton"
-                               class="col-md-3 col-sm-6 btn btn-primary text-uppercase rounded" value='Envoyer'  onclick=" alert('Votre Commantaire a été bien transmis');">
+                               class="col-md-3 col-sm-6 btn btn-primary text-uppercase rounded" value='Envoyer'
+                               onclick=" alert('Votre Commantaire a été bien transmis');">
                     </div>
                 </form>
 
