@@ -27,21 +27,21 @@ use App\Controller\Admin\AdminController;
         <tbody>
 
         <?php foreach ($data['users'] as $user) :?>
-            <?php $banned = $user->getStatus()=='banned' ?>
-            <?php $text = $banned ? 'Banni' : 'Visiteur' ?>
-            <?php $btnClass = $banned ? 'btn-outline-success' : 'btn-outline-danger' ?>
-            <?php $btnText = $banned ? 'Débannir' : 'Bannir' ?>
-            <?php $statusValue = $banned ? 'visitor' : 'banned' ?>
-            <?php  ?>
+            <?= $banned = $user->getStatus()=='banned' ?>
+            <?= $text = $banned ? 'Banni' : 'Visiteur' ?>
+            <?= $btnClass = $banned ? 'btn-outline-success' : 'btn-outline-danger' ?>
+            <?= $btnText = $banned ? 'Débannir' : 'Bannir' ?>
+            <?= $statusValue = $banned ? 'visitor' : 'banned' ?>
+
         <form action="/admin/userstatus" method='post'>
             <tr class="table-success">
-                <th><input type="hidden" name="userPseudo" value="<?php echo $user->getPseudo(); ?>"/><?php echo $user->getPseudo(); ?></th>
-                <td> <?php echo $user->getFirstname(); ?></td>
-                <td> <?php echo $user->getLastname(); ?></td>
-                <td> <?php echo $user->getEmail(); ?></td>
-               <input type="hidden" name="userStatus" value="<?php echo $statusValue?>"/> <?php echo $statusValue;?>
-                <td><input type="submit" class="btn <?php echo $btnClass?>" value="<?php echo $btnText ?>"
-                    onclick="return  confirm('Êtes-vous sûr de vouloir [<?php echo $btnText ?>] <?php echo $user->getPseudo(); ?> ?'); "/></td>
+                <th><input type="hidden" name="userPseudo" value="<?= $user->getPseudo(); ?>"/><?= $user->getPseudo(); ?></th>
+                <td> <?= $user->getFirstname(); ?></td>
+                <td> <?= $user->getLastname(); ?></td>
+                <td> <?= $user->getEmail(); ?></td>
+               <input type="hidden" name="userStatus" value="<?= $statusValue?>"/> <?= $statusValue;?>
+                <td><input type="submit" class="btn <?= $btnClass?>" value="<?= $btnText ?>"
+                    onclick="return  confirm('Êtes-vous sûr de vouloir [<?= $btnText ?>] <?= $user->getPseudo(); ?> ?'); "/></td>
             </tr>
         </form>
         <?php endforeach;?>

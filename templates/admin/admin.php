@@ -28,15 +28,15 @@ use App\Model\Comment;
             <?php foreach ($data['posts'] as $post) :?>
 
             <div class="post-preview text-center" style="margin-bottom: 1.5rem; ">
-                <div href="/articles/<?php echo $post->getID()?>">
-                    <h2 class="post-title" style="margin-top:0;"><?php echo $post->getTitle()?></h2>
+                <div href="/articles/<?= $post?->getID()?>">
+                    <h2 class="post-title" style="margin-top:0;"><?= $post?->getTitle()?></h2>
                 </div>
                 <div class="post-meta">
-                    Par <a href="#0"><?php echo $post->getAuthor(); ?></a> le  <?php echo $post->getCreatedAt()->format('d/m/Y H:i'); ?>
+                    Par <a href="#0"><?= $post?->getAuthor(); ?></a> le  <?= $post?->getCreatedAt()->format('d/m/Y H:i'); ?>
                 </div>
                 <?php
 
-                $comments = $post->getComments();
+                $comments = $post?->getComments();
 
                 $commentsNotApproved = count(array_filter($comments, function($comment) {
                     return $comment->getStatus() == 'not_approved';
@@ -45,10 +45,10 @@ use App\Model\Comment;
                 ?>
 
                 <?php if ($commentsNotApproved > 0 ) {?>
-                <li href="/articles/<?php echo $post->getID()?>" class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">
-                    Commentaires en attente<span class="rounded-pill badge bg-warning"><?php echo $commentsNotApproved?></span>
+                <li href="/articles/<?= $post?->getID()?>" class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">
+                    Commentaires en attente<span class="rounded-pill badge bg-warning"><?= $commentsNotApproved ?></span>
                 </li>
-                <?php }else{ ?>
+                <?php } else { ?>
                 <li  class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">
                     Aucun commentaire en attente<span class="rounded-pill badge bg-info"></span>
                 </li>
@@ -57,18 +57,18 @@ use App\Model\Comment;
             </div>
                 <div class="form-buttons" style="display: flex; justify-content: space-around;">
                     <form action="/admin/edit" method="post">
-                        <input type="hidden" name="postId" value="<?php echo $post->getID()?>" />
+                        <input type="hidden" name="postId" value="<?= $post?->getID()?>" />
                         <input class="btn btn-outline-info rounded" type="submit" value="Éditer" />
                     </form>
 
-                    <a class="" href="/articles/<?php echo $post->getID()?>">
+                    <a class="" href="/articles/<?= $post?->getID()?>">
                         <button class="btn btn-outline-primary rounded">Voir</button>
                     </a>
 
                     <form action="/admin/delete" method="post">
-                        <input type="hidden" name="postId" value="<?php echo $post->getID()?>" />
+                        <input type="hidden" name="postId" value="<?= $post?->getID()?>" />
                         <input class="btn btn-outline-danger rounded" type="submit" value="Supprimer"
-                               onclick="return confirm('Vous voulez vraiment supprimer : <?php echo $post->getTitle()?>?');"/>
+                               onclick="return confirm('Vous voulez vraiment supprimer : <?= $post?->getTitle()?>?');"/>
                     </form>
                 </div>
             <hr class="my-4" />

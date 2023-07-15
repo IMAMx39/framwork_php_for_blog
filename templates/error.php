@@ -12,7 +12,7 @@ use App\Controller\LoginController;
             <div class="col-md-10 col-lg-8 col-xl-7">
 
                 <p class="alert alert-danger text-center">
-                    <?=  $data['errors'] ?>
+                    <?= $data['errors'] ?>
                 </p>
 
                 <hr class="my-4" />

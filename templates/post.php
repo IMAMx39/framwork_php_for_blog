@@ -55,7 +55,7 @@ use Core\Form\FormBuilder;
                                     avant d'apparaître.</em></small>
                         </div>
                     </div>
-                    <input type="hidden" name="postId" value="<?php echo $data['postId'] ?>" >
+                    <input type="hidden" name="postId" value="<?= $data['postId'] ?>" >
                     <br/>
                     <div class="row justify-content-center">
                         <input type="submit" id="submitButton"
@@ -76,21 +76,21 @@ use Core\Form\FormBuilder;
                         <div class="card bg-warning  " style="margin-top: 1.5rem">
                             <div class="card-header">Non Valider par l'admin</div>
                             <div class="card-body">
-                                <h4 class="card-title">Par <?php echo $comment->getAuthor(); ?></h4>
+                                <h4 class="card-title">Par <?= $comment->getAuthor(); ?></h4>
                                 <h6 class="card-subtitle mb-2 text-muted">
-                                    le <?php echo $comment->getCreatedAt(); ?> </h6>
-                                <p class="card-text"> <?php echo $comment->getContent(); ?> </p>
+                                    le <?=  $comment->getCreatedAt(); ?> </h6>
+                                <p class="card-text"> <?=  $comment->getContent(); ?> </p>
                             </div>
                             <div class="form-buttons" style="display: flex; justify-content: space-around; margin-bottom: 0.5rem;}">
                                 <form action="/comment/approve" method="post">
-                                    <input type="hidden" name="postId" value="<?php echo $data['postId'] ?>"/>
-                                    <input type="hidden" name="commentId" value="<?php echo $comment->getId(); ?>"/>
+                                    <input type="hidden" name="postId" value="<?= $data['postId'] ?>"/>
+                                    <input type="hidden" name="commentId" value="<?= $comment->getId(); ?>"/>
                                     <input class="btn btn-success rounded"
                                            type="submit" value="Approuver"/>
                                 </form>
                                 <form action="/comment/delete" method="post" >
-                                    <input type="hidden" name="postId" value="<?php echo $data['postId'] ?>"/>
-                                    <input type="hidden" name="commentId" value="<?php echo $comment->getId(); ?>"/>
+                                    <input type="hidden" name="postId" value="<?= $data['postId'] ?>"/>
+                                    <input type="hidden" name="commentId" value="<?= $comment->getId(); ?>"/>
                                     <input class="btn btn-danger rounded"
                                            type="submit" value="Supprimer"
                                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?');"/>
@@ -101,10 +101,10 @@ use Core\Form\FormBuilder;
                     <?php if ($comment->getStatus() == 'approved') { ?>
                         <div class="card " style="margin-top: 1.5rem">
                             <div class="card-body">
-                                <h4 class="card-title">Par <?php echo $comment->getAuthor(); ?></h4>
+                                <h4 class="card-title">Par <?= $comment->getAuthor(); ?></h4>
                                 <h6 class="card-subtitle mb-2 text-muted">
-                                    le <?php echo $comment->getCreatedAt(); ?> </h6>
-                                <p class="card-text"> <?php echo $comment->getContent(); ?> </p>
+                                    le <?= $comment->getCreatedAt(); ?> </h6>
+                                <p class="card-text"> <?= $comment->getContent(); ?> </p>
                             </div>
                         </div>
                     <?php } ?>

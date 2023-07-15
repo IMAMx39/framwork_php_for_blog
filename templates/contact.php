@@ -26,12 +26,12 @@ use Core\Form\FormBuilder;
         délais.<br/><br/>
         <small class="text-muted">À très vite !</small>
     </div>
-    <?php echo $form->start(); ?>
-    <?php echo $form->row('username'); ?>
-    <?php echo $form->row('email'); ?>
-    <?php echo $form->row('subject'); ?>
+    <?= $form->start(); ?>
+    <?= $form->row('username'); ?>
+    <?= $form->row('email'); ?>
+    <?= $form->row('subject'); ?>
 
     <button type="submit" value="submit" class="btn btn-primary mt-4 me-lg-4">Valider</button>
-    <?php echo $form->end(); ?>
+    <?= $form->end(); ?>
 
 <?php endif; ?>

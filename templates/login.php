@@ -13,12 +13,12 @@ use Core\Form\FormBuilder;
 
 
     <?php if ($errors !== []) : ?>
-    <p style="padding: 0.5em; background-color: red; color: white"><?php echo implode(', ', $errors); ?></p>
+    <p style="padding: 0.5em; background-color: red; color: white"><?= implode(', ', $errors); ?></p>
     <?php endif; ?>
-    <?php echo $form->start(); ?>
-    <?php echo $form->row('email'); ?>
-    <?php echo $form->row('password'); ?>
+    <?= $form->start(); ?>
+    <?= $form->row('email'); ?>
+    <?= $form->row('password'); ?>
 
     <button type="submit" value="submit" class="btn btn-primary mt-4 me-lg-4">Valider</button>
-    <?php echo $form->end(); ?>
+    <?= $form->end(); ?>
 
