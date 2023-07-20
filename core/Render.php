@@ -8,7 +8,7 @@ final class Render
     {
         extract(array_merge($data, []));
         ob_start();
-        include_once(Parameter::get('template_path').$view).'.php';
+        include_once (Parameter::get('template_path') . $view) . '.php';
         return ob_get_clean();
     }
 }

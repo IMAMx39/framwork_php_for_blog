@@ -15,7 +15,7 @@ use App\Model\Comment;
     <div class="container px-4 px-lg-5" style="margin-top: 3rem">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
-                <div class="row justify-content-center card-list" >
+                <div class="row justify-content-center card-list">
                     <a class="col-md-4 col-sm-4" href="/admin/users">
                         <button class="btn btn-primary rounded">Utilisateurs</button>
                     </a>
@@ -24,54 +24,57 @@ use App\Model\Comment;
                     </a>
                 </div>
             </div>
-            <hr class="my-4" />
-            <?php foreach ($data['posts'] as $post) :?>
+            <hr class="my-4"/>
+            <?php foreach ($data['posts'] as $post) : ?>
 
-            <div class="post-preview text-center" style="margin-bottom: 1.5rem; ">
-                <div href="/articles/<?= $post?->getID()?>">
-                    <h2 class="post-title" style="margin-top:0;"><?= $post?->getTitle()?></h2>
+                <div class="post-preview text-center" style="margin-bottom: 1.5rem; ">
+                    <div href="/articles/<?= $post?->getID() ?>">
+                        <h2 class="post-title" style="margin-top:0;"><?= $post?->getTitle() ?></h2>
+                    </div>
+                    <div class="post-meta">
+                        Par <a href="#0"><?= $post?->getAuthor(); ?></a>
+                        le <?= $post?->getCreatedAt()->format('d/m/Y H:i'); ?>
+                    </div>
+                    <?php
+
+                    $comments = $post?->getComments();
+
+                    $commentsNotApproved = count(array_filter($comments, function ($comment) {
+                        return $comment->getStatus() == 'not_approved';
+                    }));
+
+                    ?>
+
+                    <?php if ($commentsNotApproved > 0) { ?>
+                        <li href="/articles/<?= $post?->getID() ?>"
+                            class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">
+                            Commentaires en attente<span
+                                    class="rounded-pill badge bg-warning"><?= $commentsNotApproved ?></span>
+                        </li>
+                    <?php } else { ?>
+                        <li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">
+                            Aucun commentaire en attente<span class="rounded-pill badge bg-info"></span>
+                        </li>
+                    <?php } ?>
+
                 </div>
-                <div class="post-meta">
-                    Par <a href="#0"><?= $post?->getAuthor(); ?></a> le  <?= $post?->getCreatedAt()->format('d/m/Y H:i'); ?>
-                </div>
-                <?php
-
-                $comments = $post?->getComments();
-
-                $commentsNotApproved = count(array_filter($comments, function($comment) {
-                    return $comment->getStatus() == 'not_approved';
-                }));
-
-                ?>
-
-                <?php if ($commentsNotApproved > 0 ) {?>
-                <li href="/articles/<?= $post?->getID()?>" class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">
-                    Commentaires en attente<span class="rounded-pill badge bg-warning"><?= $commentsNotApproved ?></span>
-                </li>
-                <?php } else { ?>
-                <li  class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">
-                    Aucun commentaire en attente<span class="rounded-pill badge bg-info"></span>
-                </li>
-                <?php } ?>
-
-            </div>
                 <div class="form-buttons" style="display: flex; justify-content: space-around;">
                     <form action="/admin/edit" method="post">
-                        <input type="hidden" name="postId" value="<?= $post?->getID()?>" />
-                        <input class="btn btn-outline-info rounded" type="submit" value="Éditer" />
+                        <input type="hidden" name="postId" value="<?= $post?->getID() ?>"/>
+                        <input class="btn btn-outline-info rounded" type="submit" value="Éditer"/>
                     </form>
 
-                    <a class="" href="/articles/<?= $post?->getID()?>">
+                    <a class="" href="/articles/<?= $post?->getID() ?>">
                         <button class="btn btn-outline-primary rounded">Voir</button>
                     </a>
 
                     <form action="/admin/delete" method="post">
-                        <input type="hidden" name="postId" value="<?= $post?->getID()?>" />
+                        <input type="hidden" name="postId" value="<?= $post?->getID() ?>"/>
                         <input class="btn btn-outline-danger rounded" type="submit" value="Supprimer"
-                               onclick="return confirm('Vous voulez vraiment supprimer : <?= $post?->getTitle()?>?');"/>
+                               onclick="return confirm('Vous voulez vraiment supprimer : <?= $post?->getTitle() ?>?');"/>
                     </form>
                 </div>
-            <hr class="my-4" />
+                <hr class="my-4"/>
             <?php endforeach; ?>
         </div>
     </div>

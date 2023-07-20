@@ -3,8 +3,6 @@
  * @var array $data
  */
 
-use App\Controller\LoginController;
-
 ?>
 <main class="mb-4">
     <div class="container px-4 px-lg-5">
@@ -15,7 +13,7 @@ use App\Controller\LoginController;
                     <?= $data['errors'] ?>
                 </p>
 
-                <hr class="my-4" />
+                <hr class="my-4"/>
 
                 <a class="row justify-content-center" href="/">
                     <button class="col-md-7 col-lg-7 col-xl-7 btn btn-primary">Retourner à l'accueil</button>

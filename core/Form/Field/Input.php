@@ -18,7 +18,7 @@ class Input extends Field
             '%s<input type="text" name="%s" %s %s>',
             $this->label,
             $this->name,
-            implode(' ', $attributes),$this->required ? 'required' : '');
+            implode(' ', $attributes), $this->required ? 'required' : '');
     }
 
 

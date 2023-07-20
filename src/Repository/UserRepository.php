@@ -30,7 +30,8 @@ class UserRepository extends Manager
 
         $req = $this->getCnxConfig()->prepare(
             'INSERT INTO user (pseudo,email, password, fk_user_status, firstname, lastname)
-            VALUES (?, ?, ?, ?, ?, ?)');
+            VALUES (?, ?, ?, ?, ?, ?)'
+        );
 
         return $req->execute([
             $user->getPseudo(),
@@ -47,7 +48,8 @@ class UserRepository extends Manager
 
         $query = $this->getCnxConfig()->prepare(
             'SELECT password, email, pseudo, firstname, lastname, fk_user_status as status   FROM user 
-                WHERE email = ?');
+                WHERE email = ?'
+        );
 
         $query->setFetchMode(PDO::FETCH_CLASS, User::class);
 
@@ -59,7 +61,7 @@ class UserRepository extends Manager
         return !$result ? null : $result;
     }
 
-    public function banUser(string $name) : bool
+    public function banUser(string $name): bool
     {
         $req = $this->getCnxConfig()->prepare(
             'UPDATE user SET fk_user_status = "banned" WHERE pseudo = ?'
@@ -68,7 +70,7 @@ class UserRepository extends Manager
         return $req->execute([$name]);
     }
 
-    public function unbanUser(string $name) : bool
+    public function unbanUser(string $name): bool
     {
         $req = $this->getCnxConfig()->prepare(
             'UPDATE user SET fk_user_status = "visitor" WHERE pseudo = ?'

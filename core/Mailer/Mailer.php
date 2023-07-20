@@ -4,16 +4,16 @@ namespace Core\Mailer;
 
 class Mailer
 {
-    private static array $_dsn = [
-        'mailer_dsn'    => 'smtp://contact@blog.imam-maassou.com:Imamthebest1@tourte.o2switch.net:465',
+    private static array $dsn = [
+        'mailer_dsn' => 'smtp://contact@blog.imam-maassou.com:Imamthebest1@tourte.o2switch.net:465',
     ];
 
-    public static function getMailerDsn($key) : ?string
+    public static function getMailerDsn($key): ?string
     {
-        if(!isset(self::$_dsn[$key])) {
+        if (!isset(self::$dsn[$key])) {
             return null;
         }
 
-        return self::$_dsn[$key];
+        return self::$dsn[$key];
     }
 }

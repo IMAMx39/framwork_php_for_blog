@@ -3,6 +3,8 @@
 namespace Core;
 
 
+use function array_shift;
+
 class Router
 {
     public Request $request;
@@ -28,21 +30,21 @@ class Router
     public function resolve(Request $request): array
     {
         $matches = [];
-        $uri = $request->getUri() ;
+        $uri = $request->getUri();
         $method = $request->method();
 
         foreach ($this->routes[$method] as $key => $value) {
-            if (preg_match($key,$uri,$matches) != 1){
+            if (preg_match($key, $uri, $matches) != 1) {
                 continue;
             }
 
             $path = $key;
 
-            if (count($matches) > 1){
-                \array_shift($matches);
+            if (count($matches) > 1) {
+                array_shift($matches);
                 $this->params = $matches;
             }
-            return [$this->routes[$method][$path] ?? null,$this->params] ;
+            return [$this->routes[$method][$path] ?? null, $this->params];
 
         }
 

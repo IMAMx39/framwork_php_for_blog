@@ -2,6 +2,9 @@
 
 namespace App\Model;
 
+use DateTime;
+use Exception;
+
 class Post
 {
 
@@ -18,7 +21,7 @@ class Post
     /**
      * @return mixed
      */
-    public function getId():int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -91,17 +94,17 @@ class Post
 
     /**
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
-    public function getCreatedAt() : \DateTime
+    public function getCreatedAt(): DateTime
     {
-        return new \DateTime($this->createdAt);
+        return new DateTime($this->createdAt);
     }
 
     /**
      * @param mixed $createdAt
      */
-    public function setCreatedAt(\DateTime $createdAt): self
+    public function setCreatedAt(DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
         return $this;
@@ -110,7 +113,7 @@ class Post
 
     /**
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function getUpdatedAt()
     {
@@ -149,7 +152,7 @@ class Post
         return $this->comments;
     }
 
-    public function setComments(array $comments) :self
+    public function setComments(array $comments): self
     {
         $this->comments = $comments;
 

@@ -27,22 +27,22 @@ abstract class Controller
     {
         $layout = $this->layoutContent();
         $view = Render::render($view, $data);
-        return (str_replace('{{ content }}', $view,$layout));
+        return (str_replace('{{ content }}', $view, $layout));
 
     }
 
     private function layoutContent(): string
     {
         ob_start();
-        $user =(new UserService())->getUserFromSession();
+        $user = (new UserService())->getUserFromSession();
         include_once(Parameter::get('template_base'));
         return ob_get_clean();
     }
 
 
-    public function redirectTo(string $uri) :string
+    public function redirectTo(string $uri): string
     {
-        header("Location: $uri");
+        header("Location: {$uri}");
         exit();
     }
 

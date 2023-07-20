@@ -62,7 +62,7 @@ abstract class Field implements Stringable
 
     public function __toString(): string
     {
-        if ($this->render instanceof \Closure) {
+        if ($this->render instanceof Closure) {
             $render = $this->render;
             return $render($this);
         }

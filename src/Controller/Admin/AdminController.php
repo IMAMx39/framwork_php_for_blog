@@ -38,7 +38,7 @@ class AdminController extends Controller
 
         if ($user->getStatus() !== 'admin') {
 
-           $this->redirectTo('/');
+            $this->redirectTo('/');
         }
 
         if (empty($action)) {
@@ -110,7 +110,7 @@ class AdminController extends Controller
             $this->userService->getUserFromSession()->getPseudo());
 
 
-       return $this->redirectTo('/articles/'.$postId);
+        return $this->redirectTo('/articles/' . $postId);
 
     }
 
@@ -147,7 +147,7 @@ class AdminController extends Controller
             throw new Exception('La mise à jour du Post a rencontré un problème.');
         }
 
-        $this->redirectTo('/articles/' .$post->getId());
+        $this->redirectTo('/articles/' . $post->getId());
     }
 
     private function displayPostEdit(?int $postId): Response

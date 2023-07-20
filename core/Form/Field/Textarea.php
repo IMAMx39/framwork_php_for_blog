@@ -19,7 +19,7 @@ class Textarea extends Field
             '%s<textarea type="text" name="%s" %s %s></textarea>',
             $this->label,
             $this->name,
-            implode(' ', $attributes),$this->required ?'required':'');
+            implode(' ', $attributes), $this->required ? 'required' : '');
     }
 
     public function required(): self

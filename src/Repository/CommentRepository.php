@@ -4,31 +4,34 @@ namespace App\Repository;
 
 use App\Model\Comment;
 use Core\Db\Manager;
+use PDO;
 
 class CommentRepository extends Manager
 {
 
-    public function find(int $postId) : array
+    public function find(int $postId): array
     {
         $req = $this->getCnxConfig()->prepare(
             'SELECT c.id, c.content, c.createdAt , c.fk_comment_status status,
                         u.pseudo author
                 FROM comment c, user u
                 WHERE c.fk_user_pseudo = u.pseudo AND c.fk_post_id = ?
-                ORDER BY createdAt DESC');
+                ORDER BY createdAt DESC'
+        );
 
-        $req->setFetchMode(\PDO::FETCH_CLASS, Comment::class);
+        $req->setFetchMode(PDO::FETCH_CLASS, Comment::class);
         $req->execute([$postId]);
 
         return $req->fetchAll();
     }
 
-    public function add(int $postId, string $comment, string $username, bool $isAdmin) : bool
+    public function add(int $postId, string $comment, string $username, bool $isAdmin): bool
     {
         $status = $isAdmin ? 'approved' : 'not_approved';
         $req = $this->getCnxConfig()->prepare(
             'INSERT INTO comment (fk_post_id, fk_user_pseudo, fk_comment_status, content, createdAt)
-                VALUES (?, ?, ?, ?, now() )');
+                VALUES (?, ?, ?, ?, now() )'
+        );
 
         return $req->execute([$postId, $username, $status, $comment]);
     }
@@ -41,7 +44,7 @@ class CommentRepository extends Manager
         return $result && $query->rowCount() > 0;
     }
 
-    public function approve(int $commentId) : bool
+    public function approve(int $commentId): bool
     {
         $req = $this->getCnxConfig()->prepare(
             'UPDATE comment SET fk_comment_status = "approved" WHERE id = ?');

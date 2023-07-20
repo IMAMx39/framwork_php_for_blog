@@ -23,7 +23,7 @@ final class UserService
     public function getUserFromSession(): ?User
     {
         $user = $this->session->get('user');
-        if (!$user instanceof User){
+        if (!$user instanceof User) {
             return null;
         }
         return $user;

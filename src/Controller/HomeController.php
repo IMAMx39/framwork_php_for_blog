@@ -24,11 +24,6 @@ class HomeController extends Controller
     }
 
 
-    /**
-     * @throws SyntaxError
-     * @throws RuntimeError
-     * @throws LoaderError
-     */
     public function contact(Request $request): Response
     {
 

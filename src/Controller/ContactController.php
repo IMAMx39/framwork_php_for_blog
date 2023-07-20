@@ -3,17 +3,14 @@
 namespace App\Controller;
 
 use Core\Controller;
+use Core\Form\Field\Email as InputEmail;
 use Core\Form\Field\Input;
 use Core\Form\Field\Textarea;
-use Core\Form\Field\Email as InputEmail;
 use Core\Form\FormBuilder;
 use Core\Mailer\Mailer;
 use Core\Request;
 use Core\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mime\Email;
 
@@ -46,7 +43,7 @@ class ContactController extends Controller
 
             $this->sendMailContact($username, $email, $subject);
 
-            return $this->render('contact',[
+            return $this->render('contact', [
                 "form" => $formContact
             ]);
         }
@@ -59,7 +56,7 @@ class ContactController extends Controller
     /**
      * @throws TransportExceptionInterface
      */
-    private function sendMailContact(string $username , string $email , string $subject): void
+    private function sendMailContact(string $username, string $email, string $subject): void
     {
         $transport = Transport::fromDsn(Mailer::getMailerDsn('mailer_dsn'));
         $mailer = new \Symfony\Component\Mailer\Mailer($transport);
@@ -72,27 +69,14 @@ class ContactController extends Controller
         $mail = (new Email())
             ->from($email)
             ->to('imaassou@gmail.com')
-            ->subject('[Amazing Blog - Contact] : '.$username)
-            ->text('Vous avez reçu un email de la part de : '.$username.' ('.$email.') -> '.$subject)
-            ->html($this->renderHTML('mail_contact',$data));
- //           ->html(<<<HTML
- //<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;margin-top: 30px;" width="100%">
- //               <tr>
- //                   <td style="padding-left:15px;padding-right:15px;width:100%;padding-bottom:5px;" align="center">
- //                       <div style="line-height:10px">
- //                           <a href="" style="outline:none" target="_blank">
- //                               <img class="photo" alt="Blog Logo" src="/assets/img/otter.png" title="OtterBlog" width="123px"/>
- //                           </a>
- //                       </div>
- //                   </td>
- //               </tr>
- //           </table>
- //HTML);
+            ->subject('[Amazing Blog - Contact] : ' . $username)
+            ->text('Vous avez reçu un email de la part de : ' . $username . ' (' . $email . ') -> ' . $subject)
+            ->html($this->renderHTML('mail_contact', $data));
 
         $mailer->send($mail);
     }
 
-    private function displaySuccess(string $username) : Response
+    private function displaySuccess(string $username): Response
     {
         $data = [
             'name' => $username,

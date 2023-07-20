@@ -3,6 +3,9 @@
 namespace Core;
 
 
+use function session_destroy;
+use function session_start;
+
 class Session
 {
 
@@ -11,17 +14,19 @@ class Session
         self::start();
     }
 
-    public static function destroy() :null
+    public static function destroy(): null
     {
         if (session_status() === PHP_SESSION_ACTIVE) {
-            \session_destroy();
+            session_destroy();
         }
         return null;
     }
+
     public function set($key, $value): void
     {
         $_SESSION[$key] = $value;
     }
+
     public function delete($key): void
     {
         if ($this->get($key)) {
@@ -41,7 +46,7 @@ class Session
     {
         if (session_status() !== PHP_SESSION_ACTIVE) {
             ini_set('session.use_strict_mode', 1); // Ensure strict mode
-            \session_start();
+            session_start();
 
         }
     }

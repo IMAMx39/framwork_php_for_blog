@@ -20,7 +20,7 @@ use Core\Form\FormBuilder;
 <?= $form->row('email'); ?>
 <?= $form->row('password'); ?>
 
-<button type="submit"  value="submit" class="btn btn-primary mt-4 me-lg-4">Valider</button>
+<button type="submit" value="submit" class="btn btn-primary mt-4 me-lg-4">Valider</button>
 <?= $form->end(); ?>
 
 

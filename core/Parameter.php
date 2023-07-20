@@ -2,6 +2,9 @@
 
 namespace Core;
 
+use InvalidArgumentException;
+use LogicException;
+
 final class Parameter
 {
     private static Parameter $instance;
@@ -15,7 +18,7 @@ final class Parameter
     public static function init(string $path): void
     {
         if (!file_exists($path)) {
-            throw new \InvalidArgumentException(sprintf('%s does not exist', $path));
+            throw new InvalidArgumentException(sprintf('%s does not exist', $path));
         }
         self::$instance = new self(require $path);
     }
@@ -23,7 +26,7 @@ final class Parameter
     private static function getParameter(): self
     {
         if (self::$instance === null) {
-            throw new \LogicException('Please call ::init() method before get ' . self::class);
+            throw new LogicException('Please call ::init() method before get ' . self::class);
         }
         return self::$instance;
     }
@@ -32,7 +35,7 @@ final class Parameter
     public static function get(string $key)
     {
         if (!isset(self::getParameter()->params[$key])) {
-            throw new \InvalidArgumentException($key.' not exists');
+            throw new InvalidArgumentException($key . ' not exists');
         }
 
         return self::getParameter()->params[$key];

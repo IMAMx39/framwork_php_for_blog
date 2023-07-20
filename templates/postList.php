@@ -21,8 +21,8 @@ foreach ($data['posts'] as $post) :?>
                     <a href="/articles/<?= $post->getId(); ?>" class="card-link">Voir plus</a>
                 </div>
                 <div class="card-footer text-muted">
-                   Par <a href="#"> <?= $post->getAuthor(); ?> </a>
-                   Le  <?= $post->getCreatedAt()->format('d/m/Y H:i'); ?>
+                    Par <a href="#"> <?= $post->getAuthor(); ?> </a>
+                    Le <?= $post->getCreatedAt()->format('d/m/Y H:i'); ?>
                 </div>
             </div>
         </div>

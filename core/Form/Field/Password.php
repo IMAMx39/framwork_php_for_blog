@@ -10,7 +10,6 @@ class Password extends Field
     private bool $required = false;
 
 
-
     protected function template(): string
     {
 

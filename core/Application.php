@@ -12,7 +12,7 @@ class Application
 
     public function __construct()
     {
-        Parameter::init(dirname(__DIR__).'/config/parameter.php');
+        Parameter::init(dirname(__DIR__) . '/config/parameter.php');
         if (Parameter::get('app_env') === 'dev') {
             $whoops = new Run;
             $whoops->pushHandler(new PrettyPageHandler);
@@ -31,7 +31,7 @@ class Application
             return new Response('', 404);
         }
 
-        $response = call_user_func_array($callable, [$request,$params]);
+        $response = call_user_func_array($callable, [$request, $params]);
         if (!$response instanceof Response) {
             throw new LogicException('Controller response must be an instance of ' . Response::class . ' ' . gettype($response) . ' given');
         }

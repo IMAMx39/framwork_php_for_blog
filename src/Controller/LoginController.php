@@ -29,7 +29,7 @@ class LoginController extends Controller
 
         $form
             ->add(
-                (new Input('email',['id' => 'email', 'class' => 'form-control']))
+                (new Input('email', ['id' => 'email', 'class' => 'form-control']))
                     ->withLabel('Email')
                     ->required()
             )->add(
@@ -45,7 +45,7 @@ class LoginController extends Controller
             $password = $request->post('password');
 
             $user = $this->userRepository->getUser($email);
-            if ($user->getStatus()==='banned'){
+            if ($user->getStatus() === 'banned') {
 
                 return $this->showError("Ce compte a été banni par un administrateur.");
             }
